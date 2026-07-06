@@ -51,7 +51,7 @@ open book) and offers the start menu. First interactive frame after boot.
 | 5d | ↳ light beam | top −30, 120×200 | Gold triangular gradient, `clip-path` cone → a translucent polygon |
 | 6 | **Reader silhouette** | bottom 70, right 300; 60×150 | Two plum blobs (body 56×96 + head 34×38), gold rim-light `glow` on the left edge |
 | 7 | **Bottom vignette** | bottom, full width, 130 tall | Gradient transparent→`NIGHT_BOTTOM`, grounds the scene |
-| 8 | **Eyebrow** | left 110, top ~210 | "A BOOKSHOP TALE" — tracked 8px, 13, `EYEBROW_GOLD` (use `render_tracked`) |
+| 8 | **Eyebrow** | left 110, top ~150 | "A BOOKSHOP TALE" — tracked 8px, 13, `EYEBROW_GOLD` (use `render_tracked`) |
 | 9 | **Hero title** | left 110, below eyebrow | "Spines" (line 1) + "& Starlight" (line 2, italic, `GOLD_ITALIC`). Cormorant 700, 96, `CREAM`, gold text-glow. Two blits |
 | 10 | **Menu** | left 110, top ~+34 below title; width 250, gap 12 | 4 buttons, see §4 |
 | 11 | **Footer** | bottom 22, centered | "© MIDNIGHT MARGIN STUDIOS · PRESS ANY KEY" — tracked 2px, 12, `TEXT_FAINT` |
