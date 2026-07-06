@@ -19,7 +19,7 @@ serif type.
 
 It is a **richer reimagining** of the game that already exists in
 [`bookstore.py`](../../bookstore.py) ("The Little Bookshop"), which today is a
-single screen: Mira walks a shelf, clicks books that match a colour list, and
+single screen: Mira walks a shelf, clicks books that match a color list, and
 wheels a cart to a checkout zone. Spines & Starlight keeps that spine — walk,
 gather, checkout — and expands it into five distinct screens with real book
 data, an economy, and a menu.
@@ -68,10 +68,10 @@ input — lives in [`03-screen-flow.md`](03-screen-flow.md).
 | Concept element | Today in `bookstore.py` | Change needed |
 |-----------------|-------------------------|---------------|
 | 5 screens | 1 screen (shop only) | Introduce a **scene/state machine** (see flow doc) |
-| Books with title/author/genre/price | Books are coloured rectangles keyed by colour name | Replace `Book` colour model with a data-driven catalog ([`02-data-model.md`](02-data-model.md)) |
+| Books with title/author/genre/price | Books are colored rectangles keyed by color name | Replace `Book` color model with a data-driven catalog ([`02-data-model.md`](02-data-model.md)) |
 | Genre aisles (Fantasy/Romance/Mystery/Sci-Fi) | One flat set of shelves | Group shelves by genre, hue per genre |
 | Star-purse coins, prices, member's charm | No economy | Add coin balance + per-book prices + discount |
-| Quest: "gather 5 tales" | Colour shopping list of 4 | Generalise the objective/quest tracker |
+| Quest: "gather 5 tales" | Color shopping list of 4 | Generalize the objective/quest tracker |
 | Mira, walking, cart | `Mira`, `draw_cart`, walking already exist | Reuse; restyle to the night palette |
 | Cormorant Garamond / Spectral | `georgia` SysFont | Map to best available serif ([`01-design-system.md`](01-design-system.md)) |
 | Hover tooltip / book detail | Hover glow only | New tooltip + full detail screen |
@@ -128,4 +128,4 @@ screen 04.
 | 7 | `screen-02-bookshop.md` | ✅ Done |
 | 8 | `screen-03-cart.md` | ✅ Done |
 | 9 | `screen-04-checkout.md` | ✅ Done |
-| 10 | `screen-05-book-detail.md` | ⬜ Not started |
+| 10 | `screen-05-book-detail.md` | ✅ Done |

@@ -1,7 +1,7 @@
 # Spines & Starlight — Design System
 
 > Palette, typography, spacing, and motion for all five screens.
-> Colours are transcribed from the concept's `oklch()` values and converted to
+> Colors are transcribed from the concept's `oklch()` values and converted to
 > pygame **sRGB (0–255)** tuples. See [`00-overview.md`](00-overview.md) for scope.
 
 Everything here is defined once and reused by every screen spec. Where a spec
@@ -9,9 +9,9 @@ says "gold button" or "night background," it means the tokens on this page.
 
 ---
 
-## 1. Colour
+## 1. Color
 
-The concept authors colour in `oklch(L C H)`. pygame needs `(r, g, b)`. Every
+The concept authors color in `oklch(L C H)`. pygame needs `(r, g, b)`. Every
 value below was converted with the exact OKLCH→sRGB pipeline; the helper is
 included so you can convert any stragglers yourself.
 
@@ -80,7 +80,7 @@ def oklch_to_rgb(L, C, h):
 
 | Token | oklch | RGB | Use |
 |-------|-------|-----|-----|
-| `COIN_LIGHT` | 0.92 0.14 84 | `(255, 220, 110)` | Coin highlight (radial centre) |
+| `COIN_LIGHT` | 0.92 0.14 84 | `(255, 220, 110)` | Coin highlight (radial center) |
 | `COIN_DARK` | 0.66 0.14 66 | `(203, 126, 25)` | Coin shadow (radial edge) |
 | `COIN_NUM` | 0.94 0.08 82 | `(255, 231, 174)` | Coin count text |
 | `LANTERN_LIGHT` | 0.90 0.15 82 | `(255, 211, 91)` | Lantern/lamp core |
@@ -126,7 +126,7 @@ def oklch_to_rgb(L, C, h):
 ## 2. Genre hue system
 
 Each genre owns a **hue angle**; spines, labels, pills, and glows for that genre
-are all derived from it. This is the single most important colour idea in the
+are all derived from it. This is the single most important color idea in the
 concept — keep genres hue-consistent.
 
 | Genre | Hue | Label RGB | Spine mid (L0.42 C0.11) RGB | Pill/tag |
@@ -139,7 +139,7 @@ concept — keep genres hue-consistent.
 > Romance labels/headers in the concept drift between hue 18/20/30 and Mystery
 > between 210/220; treat the anchor hues above as canonical and vary ±10 freely.
 
-### Deriving a spine's colours (from the concept's `build()`)
+### Deriving a spine's colors (from the concept's `build()`)
 
 Every spine gets deterministic per-book variation. For book index `i` in a genre
 of hue `H`:
@@ -214,7 +214,7 @@ def load_font(path, size, sysfallback, bold=False, italic=False):
 
 > **Letter-spacing** isn't native to pygame text. For the short uppercase
 > eyebrows, render glyph-by-glyph with an added pixel gap, or pre-render the
-> label with spaces. A small `render_tracked(text, font, colour, px)` helper is
+> label with spaces. A small `render_tracked(text, font, color, px)` helper is
 > worth writing once and lives best in the component library
 > ([`04-components.md`](04-components.md)).
 
@@ -234,7 +234,7 @@ def load_font(path, size, sysfallback, bold=False, italic=False):
   already fakes a shadow under Mira ([`bookstore.py:200`](../../bookstore.py#L200)).
   A reusable `drop_shadow(surf, rect, ...)` belongs in the component library.
 - **Glows/halos:** a soft radial — draw a large `SRCALPHA` ellipse of the accent
-  colour at low alpha behind the element (see the counter halo,
+  color at low alpha behind the element (see the counter halo,
   [`bookstore.py:284`](../../bookstore.py#L284)). Coins, lanterns, the floating
   book, and hover highlights all use this.
 

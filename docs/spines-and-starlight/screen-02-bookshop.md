@@ -9,7 +9,7 @@
 
 This is the largest screen and the direct successor to the current game's single
 shop view ([`bookstore.py`](../../bookstore.py)). Reuse walking, cart-follow, and
-`Pop` feedback; replace coloured rectangles with genre-hued, data-driven spines.
+`Pop` feedback; replace colored rectangles with genre-hued, data-driven spines.
 
 ---
 
@@ -61,7 +61,7 @@ Rendered top→bottom in order Fantasy, Romance, Mystery, Sci-Fi
 
 ### 4a. Genre label block
 - Flex width **158**, right-aligned, padding-bottom 12.
-- **Name:** Cormorant 600, 27, genre-tinted (`GENRE_HUE` label colour, e.g.
+- **Name:** Cormorant 600, 27, genre-tinted (`GENRE_HUE` label color, e.g.
   Fantasy `(246,227,184)`).
 - **Subtitle:** 10px, tracked 2.5, uppercase, dimmer genre tint
   (e.g. "EPIC & HIGH").
@@ -75,7 +75,7 @@ Rendered top→bottom in order Fantasy, Romance, Mystery, Sci-Fi
 
 ### 4c. Shelf plank
 - Height **15**, radius 3, wood gradient `WOOD_TOP`→`WOOD_BOTTOM`, top highlight
-  `WOOD_HI`, drop shadow. Generalises [`bookstore.py:269`](../../bookstore.py#L269).
+  `WOOD_HI`, drop shadow. Generalizes [`bookstore.py:269`](../../bookstore.py#L269).
 
 ## 5. Actor: Mira + cart
 

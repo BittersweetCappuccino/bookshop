@@ -61,7 +61,7 @@ The one **light** surface — a paper card, rotated ~1.2°
 
 | Row | Content | Style |
 |-----|---------|-------|
-| Header | "Spines & Starlight" | Cormorant 700, 26, `RECEIPT_INK`, centred |
+| Header | "Spines & Starlight" | Cormorant 700, 26, `RECEIPT_INK`, centered |
 | Sub-header | "EST. BENEATH THE STARS" | tracked 10, `RECEIPT_FAINT` |
 | *(dashed divider)* | | dashed line, `RECEIPT_FAINT` |
 | Line items | `{title} … {price}` per `cart.items` | 13, `RECEIPT_INK`; ellipsize long titles |

@@ -64,7 +64,7 @@ scene stays alive underneath (for overlay-style returns).
 |------|----|---------|----------------|
 | boot | `TITLE` | app start | Load `Profile`; play title music |
 | `TITLE` | `SHOP` | "New Story" button / any key | Fresh cart & quest; enter shop |
-| `TITLE` | `SHOP`* | "Continue" button | Restore `continue_state`; jump to its saved scene (usually `SHOP` or `CART`). Greyed if no save |
+| `TITLE` | `SHOP`* | "Continue" button | Restore `continue_state`; jump to its saved scene (usually `SHOP` or `CART`). Grayed if no save |
 | `TITLE` | `COLLECTION`† | "Your Collection" | Out of scope — stub for now |
 | `TITLE` | `SETTINGS`† | "Settings" | Out of scope — stub for now |
 | `SHOP` | `DETAIL` | click/select a spine, or "Read" on tooltip | Push `DETAIL` with that `Book`; `SHOP` stays underneath |
@@ -141,7 +141,7 @@ same source of truth.
 ## 5. Main loop (replacing the current one)
 
 The current game is one hard-coded loop
-([`bookstore.py:370`](../../bookstore.py#L370)). Generalise it to a stack of
+([`bookstore.py:370`](../../bookstore.py#L370)). Generalize it to a stack of
 scenes:
 
 ```python
@@ -174,7 +174,7 @@ def main():
 - **`pop`** removes the top (DETAIL→SHOP).
 
 Global keys (**M** mute, window close) are handled in the loop before delegating,
-matching today's behaviour ([`bookstore.py:388`](../../bookstore.py#L388)).
+matching today's behavior ([`bookstore.py:388`](../../bookstore.py#L388)).
 
 ---
 

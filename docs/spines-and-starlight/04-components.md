@@ -2,7 +2,7 @@
 
 > The reusable widgets every screen is built from. Each entry gives the concept
 > dimensions (1280×720 space; ×0.75 for 960×600), states, and how to draw it in
-> pygame. Colours are tokens from [`01-design-system.md`](01-design-system.md);
+> pygame. Colors are tokens from [`01-design-system.md`](01-design-system.md);
 > data comes from [`02-data-model.md`](02-data-model.md).
 
 Build these once in a `widgets.py` (+ `primitives.py` for the helpers) so the
@@ -14,7 +14,7 @@ per-screen specs can just say "a gold button here" and mean exactly this.
 
 | Helper | Signature | What it does |
 |--------|-----------|--------------|
-| `oklch_to_rgb` | `(L,C,h) -> (r,g,b)` | Colour conversion (see design system §1.1) |
+| `oklch_to_rgb` | `(L,C,h) -> (r,g,b)` | Color conversion (see design system §1.1) |
 | `vgradient` | `(surf, rect, top, bottom)` | Vertical gradient fill (row-by-row, or a cached 1×H strip scaled) |
 | `round_rect` | `(surf, rect, color, radius, width=0)` | `pygame.draw.rect(..., border_radius=radius)` |
 | `alpha_rect` | `(surf, rect, rgba, radius)` | Translucent rounded fill via an `SRCALPHA` sub-surface |
@@ -79,17 +79,17 @@ Recommended API: `Button(rect, label, kind, on_click, enabled=True)` with
 
 ## 3. Book spine (shelf)
 
-The vertical book on a shelf (screen 02). Colours/size derived per book — see
+The vertical book on a shelf (screen 02). Colors/size derived per book — see
 `spine_shades()` in design system §2.
 
 - **Geometry:** width `21 + (i*17)%13` (21–34) · height `66 + (i*41)%42` (66–108),
   bottom-aligned on the shelf, gap 6px between spines.
 - **Body:** vertical gradient `top→mid(32%)→bottom` from `spine_shades`; radius
   `2px 3px 3px 2px`; inset 1px dark edge.
-- **Title band:** 5px bar of `band` colour across the top.
+- **Title band:** 5px bar of `band` color across the top.
 - **Title text:** vertical (`writing-mode: vertical-rl` in concept) → in pygame,
   render the title horizontally then `pygame.transform.rotate(surf, 90)` and blit
-  centred; Cormorant 600, 10px, genre-tinted near-white, drop-shadowed, clipped
+  centered; Cormorant 600, 10px, genre-tinted near-white, drop-shadowed, clipped
   to the spine.
 - **States:**
   - `hover` → lift a few px + soft `glow` behind + show the **tooltip** (§5).
@@ -112,13 +112,13 @@ gradient, smaller (`w 14–22`, `h 44–59`), drawn onto a surface then blurred
 - **Fill:** genre-hued diagonal gradient (Ashen Crown: violet
   `oklch(0.42 0.13 288)`→`(0.2 0.09 290)`).
 - **Details:** left spine-shadow strip; inset 1.5px gold frame (inset 20);
-  centred emblem (ring + 4 rays for Ashen Crown); title Cormorant 700 40,
+  centered emblem (ring + 4 rays for Ashen Crown); title Cormorant 700 40,
   author uppercase tracked; top eyebrow "A Novel of the Star-Court".
 - **Behind:** big violet `glow` halo.
 
 ### 4b. Cart thumbnail (screen 03)
 - **Size:** 58×84, radius 3. Same gradient idea, miniature: inset frame, a small
-  ring motif, tiny centred title (7px). Genre hue drives colour.
+  ring motif, tiny centered title (7px). Genre hue drives color.
 
 Recommend `draw_cover(surf, rect, book, detail=False)` covering both sizes.
 
@@ -148,7 +148,7 @@ API: `draw_tooltip(surf, book, anchor_xy, t)`.
 
 - **Glyph:** radial `COIN_LIGHT`→`COIN_DARK` circle, 2px inner ring
   `(203,126,25)`, optional outer `glow`. Sizes: 15 (inline price), 20 (HUD/total).
-- **Value:** coin glyph + number in Cormorant 600, colour `COIN_NUM` (HUD) or
+- **Value:** coin glyph + number in Cormorant 600, color `COIN_NUM` (HUD) or
   `MEMBER_CHARM`/gold (totals). Helper `coin_value(surf, pos, n, size)`.
 
 Used in: HUD balance, tooltip/detail/cart prices, ledger subtotal & total,
@@ -173,7 +173,7 @@ HUD pill showing cart contents (screen 02, top-right).
 Small rounded label naming a genre (tooltip, cart row, detail).
 
 - Radius 16–20, padding 2–4 × 8–11, uppercase, tracking 1.5–2, font ~9–10.
-- **Colour:** genre-hued — text light tint of the hue, fill same hue at α .4–.5.
+- **Color:** genre-hued — text light tint of the hue, fill same hue at α .4–.5.
   (Fantasy shown as violet; use `GENRE_HUE[genre]`.)
 - A neutral variant exists too ("Epic · Standalone"): outlined, `TEXT_MUTED`.
 
@@ -183,7 +183,7 @@ Small rounded label naming a genre (tooltip, cart row, detail).
 
 ## 9. Star rating
 
-`★★★★☆` from a float. `STAR_RATING` colour, tracking ~1–2.
+`★★★★☆` from a float. `STAR_RATING` color, tracking ~1–2.
 
 - Full/empty stars from `round(rating)`; optionally a half-star. Size 14
   (tooltip) / 20 (detail). Followed by `rating · N reviews`.
@@ -239,7 +239,7 @@ Screen 04 right side — a **light** paper card, the one inverted surface.
   ~1.2° (`pygame.transform.rotate` the finished sub-surface), `drop_shadow`.
 - Header "Spines & Starlight" (Cormorant 700, 26) + "EST. BENEATH THE STARS"
   (tracked 10).
-- Dashed dividers (draw a dashed line helper, colour `RECEIPT_FAINT`).
+- Dashed dividers (draw a dashed line helper, color `RECEIPT_FAINT`).
 - Line items: `title … price` per cart book (ellipsize long titles).
 - "Member's charm … −5", then **Total Due … 70 ★** (Cormorant 700, 30).
 - CTA "Complete Purchase" — violet gradient `CHECKOUT_BTN_TOP`→`CHECKOUT_BTN_BOT`,
@@ -275,7 +275,7 @@ Shared background pieces; detailed per-screen but reusable:
 |-------|-------|-------|
 | **Starfield** | all | Fixed scatter of `STAR` dots + one `tw`-twinkling overlay layer |
 | **Night gradient** | all | `NIGHT_TOP`→`NIGHT_BOTTOM` + warm top radial `glow` |
-| **Shelf plank** | 02, 04 | 15px wood gradient bar, radius 3, top highlight — generalises [`bookstore.py:269`](../../bookstore.py#L269) |
+| **Shelf plank** | 02, 04 | 15px wood gradient bar, radius 3, top highlight — generalizes [`bookstore.py:269`](../../bookstore.py#L269) |
 | **Hanging lantern** | 02 | Cord + rounded lamp, radial fill, `pulse` glow (design system §5) |
 | **Hanging desk lamp** | 04 | Cone glow pool over the desk |
 | **Desk** | 04 | Big wood gradient block `DESK_TOP`→`DESK_BOTTOM`, lip highlight |

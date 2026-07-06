@@ -2,7 +2,7 @@
 
 > The structures behind every screen: books, genres, the cart, the economy, the
 > quest, and save data — plus the **full catalog** transcribed from the concept.
-> Colours/hues come from [`01-design-system.md`](01-design-system.md).
+> Colors/hues come from [`01-design-system.md`](01-design-system.md).
 
 The concept is data-driven: a `renderVals()` block defines 48 books across 4
 genres, 5 cart items with prices, and the economy figures shown in the HUD and
@@ -12,7 +12,7 @@ ledger. This doc turns that into concrete types for the pygame build.
 
 ## 1. Genre
 
-Four fixed genres. Each owns a hue (drives every colour for its books) and a
+Four fixed genres. Each owns a hue (drives every color for its books) and a
 shelf subtitle.
 
 | Genre | `id` | Hue | Shelf subtitle | Aisle order |
@@ -46,7 +46,7 @@ GENRES = {
 
 The core entity. In the concept a book is a title + author + genre; the tooltip
 and detail screens add price, rating, page count, review count, blurb, and
-shelf-copy count. Spine geometry/colour are **derived**, not stored (see
+shelf-copy count. Spine geometry/color are **derived**, not stored (see
 `spine_shades()` in the design system).
 
 ```python
@@ -77,7 +77,7 @@ class Book:
 | title, author, genre | Concept catalog (§5) |
 | price | §4 pricing (5 canonical from concept, rest assigned) |
 | pages, rating, reviews, blurb, copies | Only **The Ashen Crown** is fully authored in the concept; others need filling (§6) |
-| spine width/height/colours, band | Derived from `genre.hue` + `shelf_index` via `spine_shades()` |
+| spine width/height/colors, band | Derived from `genre.hue` + `shelf_index` via `spine_shades()` |
 
 ---
 
@@ -293,9 +293,9 @@ class Quest:
     def complete(self, cart): return cart.count >= self.target
 ```
 
-This generalises the current game's colour shopping-list
+This generalizes the current game's color shopping-list
 ([`bookstore.py:249`](../../bookstore.py#L249) `make_list`): instead of "collect
-these 4 colours," the quest is "gather N tales" (optionally constrained by genre
+these 4 colors," the quest is "gather N tales" (optionally constrained by genre
 later). The completion gate replaces `all_done`
 ([`bookstore.py:375`](../../bookstore.py#L375)).
 
@@ -317,7 +317,7 @@ class Profile:
 ```
 
 - **New Story** → fresh `Profile`, cart empty, quest reset.
-- **Continue** → load `continue_state`; disabled/greyed if `None`.
+- **Continue** → load `continue_state`; disabled/grayed if `None`.
 - **Your Collection** → gallery of `collection` book ids (owned after checkout).
   A dedicated Collection screen is **out of scope** for the five specced screens;
   the menu entry can be a stub for now.
@@ -328,18 +328,18 @@ class Profile:
 
 ## 9. Mapping from the current `Book`
 
-Today's `Book` ([`bookstore.py:145`](../../bookstore.py#L145)) stores a colour
+Today's `Book` ([`bookstore.py:145`](../../bookstore.py#L145)) stores a color
 name and a pygame `Rect`, with `taken`/`hover` flags. Migration:
 
 | Old | New |
 |-----|-----|
-| `cname` / `color` (named colour) | `genre` + derived `spine_shades()` |
+| `cname` / `color` (named color) | `genre` + derived `spine_shades()` |
 | `Rect` position on one shelf | position derived from aisle + `shelf_index` |
 | `taken` | still needed (spine removed once added to cart) |
 | `hover` | still needed (drives tooltip on screen 02) |
 | — | new: `title, author, price, pages, rating, reviews, blurb, copies` |
 
-Keep `taken`/`hover` behaviour; replace the colour identity with the genre +
+Keep `taken`/`hover` behavior; replace the color identity with the genre +
 catalog identity above.
 
 ---
