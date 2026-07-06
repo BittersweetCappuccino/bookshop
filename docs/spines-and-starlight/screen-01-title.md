@@ -47,13 +47,17 @@ open book) and offers the start menu. First interactive frame after boot.
 | 5 | **Floating open book** | top 190, right 150; 300×230 | `fl` float (dy −16↔0 over 420 frames). Sub-parts below |
 | 5a | ↳ glow halo | inset −90 | Gold radial `glow` behind the book |
 | 5b | ↳ spine | center, 14×150 | Violet vertical gradient, rounded |
-| 5c | ↳ pages ×2 | 150×132 each | Cream gradient, `perspective rotateY ±34°` → in pygame fake with a trapezoid (4-point polygon) per page |
+| 5c | ↳ pages ×2 | 150×132 each | Cream gradient, `perspective rotateY ±34°` → in pygame fake with a trapezoid (4-point polygon) per page. Each page carries faux text: a gilded heading line (`GOLD`, ~7px) plus several thin brown body lines (`rgba(120,92,58,.3)`, ~4px, varied widths), and a small gold ◆ diamond on the right page — draw as short rounded bars, sheared to match the page's perspective |
 | 5d | ↳ light beam | top −30, 120×200 | Gold triangular gradient, `clip-path` cone → a translucent polygon |
-| 6 | **Reader silhouette** | bottom 70, right 300; 60×150 | Two plum blobs (body 56×96 + head 34×38), gold rim-light `glow` on the left edge |
+| 6 | **Reader silhouette** | bottom 70, ~102×255 (60×150 base × 1.7, grown from bottom-center) | Two plum blobs (body 56×96 + head 34×38 at base scale), gold rim-light `glow` on the left edge. Horizontally centered under the floating book (book center ≈ x 980); enlarged to fill the space between book and footer |
 | 7 | **Bottom vignette** | bottom, full width, 130 tall | Gradient transparent→`NIGHT_BOTTOM`, grounds the scene |
-| 8 | **Eyebrow** | left 110, top ~150 | "A BOOKSHOP TALE" — tracked 8px, 13, `EYEBROW_GOLD` (use `render_tracked`) |
+| 8 | **Eyebrow** | left 110, top of group | "A BOOKSHOP TALE" — tracked 8px, 13, `EYEBROW_GOLD` (use `render_tracked`). First item of the left group |
 | 9 | **Hero title** | left 110, below eyebrow | "Spines" (line 1) + "& Starlight" (line 2, italic, `GOLD_ITALIC`). Cormorant 700, 96, `CREAM`, gold text-glow. Two blits |
 | 10 | **Menu** | left 110, top ~+34 below title; width 250, gap 12 | 4 buttons, see §4 |
+
+> **Left group (eyebrow + hero title + menu)** is one block, left-aligned at
+> x 110 and **vertically centered** in the 720 frame (its combined height
+> centered on y 360). Position the group as a unit, not each row independently.
 | 11 | **Footer** | bottom 22, centered | "© MIDNIGHT MARGIN STUDIOS · PRESS ANY KEY" — tracked 2px, 12, `TEXT_FAINT` |
 
 ## 4. Menu
