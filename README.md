@@ -1,2 +1,2 @@
-# BookShop: Spine & Starlight
+# BookShop: Spines & Starlight
 WIP

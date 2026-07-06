@@ -124,7 +124,7 @@ screen 04.
 | 3 | `02-data-model.md` | ✅ Done |
 | 4 | `03-screen-flow.md` | ✅ Done |
 | 5 | `04-components.md` | ✅ Done |
-| 6 | `screen-01-title.md` | ⬜ Not started |
+| 6 | `screen-01-title.md` | ✅ Done |
 | 7 | `screen-02-bookshop.md` | ⬜ Not started |
 | 8 | `screen-03-cart.md` | ⬜ Not started |
 | 9 | `screen-04-checkout.md` | ⬜ Not started |
