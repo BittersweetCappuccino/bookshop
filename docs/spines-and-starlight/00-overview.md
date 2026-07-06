@@ -123,7 +123,7 @@ screen 04.
 | 2 | `01-design-system.md` | ✅ Done |
 | 3 | `02-data-model.md` | ✅ Done |
 | 4 | `03-screen-flow.md` | ✅ Done |
-| 5 | `04-components.md` | ⬜ Not started |
+| 5 | `04-components.md` | ✅ Done |
 | 6 | `screen-01-title.md` | ⬜ Not started |
 | 7 | `screen-02-bookshop.md` | ⬜ Not started |
 | 8 | `screen-03-cart.md` | ⬜ Not started |
