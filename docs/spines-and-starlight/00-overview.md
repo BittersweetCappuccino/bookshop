@@ -127,5 +127,5 @@ screen 04.
 | 6 | `screen-01-title.md` | ✅ Done |
 | 7 | `screen-02-bookshop.md` | ✅ Done |
 | 8 | `screen-03-cart.md` | ✅ Done |
-| 9 | `screen-04-checkout.md` | ⬜ Not started |
+| 9 | `screen-04-checkout.md` | ✅ Done |
 | 10 | `screen-05-book-detail.md` | ⬜ Not started |
