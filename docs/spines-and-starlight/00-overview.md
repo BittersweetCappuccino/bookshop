@@ -120,7 +120,7 @@ screen 04.
 | # | Document | Status |
 |---|----------|--------|
 | 1 | `00-overview.md` | ✅ Done |
-| 2 | `01-design-system.md` | ⬜ Not started |
+| 2 | `01-design-system.md` | ✅ Done |
 | 3 | `02-data-model.md` | ⬜ Not started |
 | 4 | `03-screen-flow.md` | ⬜ Not started |
 | 5 | `04-components.md` | ⬜ Not started |
