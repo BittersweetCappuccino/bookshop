@@ -277,15 +277,11 @@ def draw_thumb(surf, rect, book):
     pr.vgradient(surf, rect.inflate(-2, -2), theme.oklch_to_rgb(0.42, 0.13, hue),
                  theme.oklch_to_rgb(0.20, 0.09, hue + 2))
     pr.round_rect(surf, rect.inflate(-8, -8), (*theme.GOLD, 110), 2, width=1)
-    ec = (rect.centerx, rect.centery - 6)
-    pr.circle(surf, ec, 8, theme.GOLD, width=1)
+    # a small ring emblem, centered — no microtext title: it can't fit a 58px
+    # cover without spilling off the edges, and the row shows the full title.
+    ec = rect.center
+    pr.circle(surf, ec, 9, theme.GOLD, width=1)
     pr.circle(surf, ec, 3, theme.GOLD)
-    img = fonts.display(8, bold=True).render(book.title, True, theme.CREAM)
-    dev = pr.sr(rect)
-    prev = surf.get_clip()
-    surf.set_clip(dev)
-    surf.blit(img, img.get_rect(center=(dev.centerx, dev.centery + pr.sv(24))))
-    surf.set_clip(prev)
 
 
 # ----------------------------------------------------------------------

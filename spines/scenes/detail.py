@@ -38,10 +38,13 @@ class DetailScene(sc.Scene):
 
     def draw(self, surf, ctx):
         b = self.book
-        pr.alpha_rect(surf, (0, 0, theme.CANVAS_W, theme.CANVAS_H), (6, 2, 9, 180))  # dim shop
         furniture.blurred_shelves(surf)
+        pr.alpha_rect(surf, (0, 0, theme.CANVAS_W, theme.CANVAS_H), (6, 2, 9, 214))  # dim shop
         if not b:
             return
+
+        # a soft dark scrim behind the text column keeps it readable over the shelves
+        pr.vfade(surf, (_PANEL_X - 30, 90, _PANEL_W + 90, 540), theme.NIGHT_BOTTOM, 150, 60)
 
         widgets.draw_cover(surf, _COVER, b)
 

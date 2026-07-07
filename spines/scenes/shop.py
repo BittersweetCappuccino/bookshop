@@ -57,6 +57,7 @@ class ShopScene(sc.Scene):
                 self._add(ctx, self.hovered)
             elif self.hovered:
                 ctx.push(sc.DETAIL, book=self.hovered["book"])
+                self.hovered = None   # don't draw a ghost tooltip under the overlay
 
     def _add(self, ctx, sp):
         book = sp["book"]
