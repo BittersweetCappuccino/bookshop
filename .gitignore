@@ -5,11 +5,31 @@
 __pycache__/
 *.py[cod]
 
+# Game save data (runtime-generated player profiles — not source)
+save/
+
+# Python build / packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Test & type-check caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
 # Environment variables
 .env
 
-# VS Code settings
+# Editors / IDEs
 .vscode/
+.idea/
 
-# macOS
+# Claude Code local config
+.claude/
+
+# OS cruft
 .DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
