@@ -112,7 +112,7 @@ bookshop/
 ├── spines/                            # the Spines & Starlight game (python -m spines)
 │   ├── theme.py content.py scene.py app.py   # tokens, data, framework, main loop
 │   ├── primitives.py widgets.py fonts.py furniture.py actors.py
-│   └── scenes/                        # title, shop, detail, cart, checkout
+│   └── scenes/                        # title, shop, detail, cart, checkout, collection, settings
 └── docs/
     ├── Spines_and_Starlight_UI_Concept.html   # concept art board (5 screens)
     ├── images/                                # README screenshots
@@ -145,5 +145,6 @@ chimes) is wired via [`spines/audio.py`](spines/audio.py), and the **Cormorant
 Garamond** and **Spectral** fonts (SIL Open Font License) are bundled in
 [`spines/assets/fonts/`](spines/assets/fonts/) — the Cormorant weights were
 instantiated from its variable font, and each family ships its `OFL` license.
-Cross-cutting work still pending: the Collection / Settings screens (stubbed in
-the menu).
+The **Collection** (a gallery of purchased books) and **Settings** (music toggle
++ fullscreen/mute hints) menu screens are built too — so every title-menu entry
+now leads somewhere. The main thing left is a live playtest **with sound on**.

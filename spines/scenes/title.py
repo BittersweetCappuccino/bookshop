@@ -74,6 +74,10 @@ class TitleScene(sc.Scene):
         elif label == "Continue" and ctx.profile.continue_state:
             saved = ctx.profile.continue_state.get("scene", sc.SHOP)
             ctx.go(saved)
+        elif label == "Your Collection":
+            ctx.go(sc.COLLECTION)
+        elif label == "Settings":
+            ctx.go(sc.SETTINGS)
 
     def _new_story(self, ctx):
         ctx.cart = content.Cart()
