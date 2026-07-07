@@ -2,7 +2,7 @@
 
 > How the five screens connect: the scene graph, every transition and its
 > trigger, the global input model, and how this replaces the single loop in
-> [`bookstore.py`](../../bookstore.py). Screens are specced individually in
+> the original prototype. Screens are specced individually in
 > `screen-01…05`; this doc is the glue.
 
 ---
@@ -141,7 +141,7 @@ same source of truth.
 ## 5. Main loop (replacing the current one)
 
 The current game is one hard-coded loop
-([`bookstore.py:370`](../../bookstore.py#L370)). Generalize it to a stack of
+(the original prototype). Generalize it to a stack of
 scenes:
 
 ```python
@@ -174,7 +174,7 @@ def main():
 - **`pop`** removes the top (DETAIL→SHOP).
 
 Global keys (**M** mute, window close) are handled in the loop before delegating,
-matching today's behavior ([`bookstore.py:388`](../../bookstore.py#L388)).
+matching today's behavior (the original prototype).
 
 ---
 
@@ -198,7 +198,7 @@ def commit_purchase(ctx):
 
 Then show the receipt/confirmation, and on any key return to `TITLE`. This is the
 richer successor to today's `checked_out` flag + "Thanks for shopping" veil
-([`bookstore.py:445`](../../bookstore.py#L445)).
+(the original prototype).
 
 ---
 
@@ -208,7 +208,7 @@ richer successor to today's `checked_out` flag + "Thanks for shopping" veil
 |-------|---------|-------|
 | Mouse move | Hover (spines, buttons, rows) | all |
 | Left click | Activate hovered element | all |
-| Arrow keys / A,D | Walk Mira | `SHOP` only (reuse [`bookstore.py:181`](../../bookstore.py#L181)) |
+| Arrow keys / A,D | Walk Mira | `SHOP` only (reuse the original prototype) |
 | **E** | Add hovered/nearby book | `SHOP` (tooltip "Add · [E]") |
 | **C** | Open cart | `SHOP` |
 | **Esc** | Back one level (§3 ladder) | all |
@@ -217,7 +217,7 @@ richer successor to today's `checked_out` flag + "Thanks for shopping" veil
 | Window close | Quit | global |
 
 Keep the on-screen control hint pattern the game already draws
-([`bookstore.py:439`](../../bookstore.py#L439)), but make it per-scene (each
+(the original prototype), but make it per-scene (each
 screen doc lists its own hints).
 
 ---

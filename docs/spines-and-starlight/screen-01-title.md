@@ -112,7 +112,7 @@ menu, Enter activates. Not required for a first pass.
 - Fonts: Cormorant Garamond (700, 700 italic), Spectral (400).
 - No bitmap assets — everything is drawn (gradients, polygons, glows).
 - **Music:** the cozy procedural loop already in the game
-  ([`bookstore.py:75`](../../bookstore.py#L75) `make_music`) should start here and
+  (the original prototype `make_music`) should start here and
   carry into `SHOP`. Respect `ctx.muted`.
 
 ## 9. Implementation notes

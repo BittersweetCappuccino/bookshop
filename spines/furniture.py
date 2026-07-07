@@ -9,7 +9,7 @@ from . import theme, primitives as pr
 
 
 def shelf_plank(surf, rect):
-    """A wood plank the spines sit on (§4c). Generalizes bookstore.py's shelves."""
+    """A wood plank the spines sit on (§4c)."""
     import pygame
     rect = pygame.Rect(rect)
     pr.drop_shadow(surf, rect, 3, offset=(0, 5), rgba=(0, 0, 0, 90))

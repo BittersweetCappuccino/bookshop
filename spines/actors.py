@@ -1,10 +1,9 @@
 """
 Spines & Starlight — actors.
 
-Mira seen from behind and her cart, restyled from bookstore.py's front-facing
-Mira/draw_cart to the night palette (components §14). The walk bob, arm swing,
-and cart-follow logic carry over; the look is a hooded plum silhouette.
-Logical coordinates in.
+Mira seen from behind and her cart, in the night palette (components §14).
+The walk bob, arm swing, and cart-follow drive her motion; the look is a
+hooded plum silhouette. Logical coordinates in.
 """
 
 import math

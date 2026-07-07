@@ -18,7 +18,7 @@ per-screen specs can just say "a gold button here" and mean exactly this.
 | `vgradient` | `(surf, rect, top, bottom)` | Vertical gradient fill (row-by-row, or a cached 1×H strip scaled) |
 | `round_rect` | `(surf, rect, color, radius, width=0)` | `pygame.draw.rect(..., border_radius=radius)` |
 | `alpha_rect` | `(surf, rect, rgba, radius)` | Translucent rounded fill via an `SRCALPHA` sub-surface |
-| `glow` | `(surf, center, radius, rgba)` | Soft radial halo — big `SRCALPHA` ellipse, low alpha; as in [`bookstore.py:284`](../../bookstore.py#L284) |
+| `glow` | `(surf, center, radius, rgba)` | Soft radial halo — big `SRCALPHA` ellipse, low alpha; as in the original prototype |
 | `drop_shadow` | `(surf, rect, radius, blur, rgba)` | Offset dark rounded rect (or stacked low-alpha rects) beneath an element |
 | `render_tracked` | `(text, font, color, px) -> Surface` | Letter-spaced text (blit glyph-by-glyph with `+px` gap) — pygame has no tracking |
 | `coin_glyph` | `(surf, center, r)` | The coin disc (see §6) |
@@ -94,9 +94,9 @@ The vertical book on a shelf (screen 02). Colors/size derived per book — see
 - **States:**
   - `hover` → lift a few px + soft `glow` behind + show the **tooltip** (§5).
     Only when Mira is near (reuse the proximity gate,
-    [`bookstore.py:417`](../../bookstore.py#L417)).
+    the original prototype).
   - `taken` → not drawn (removed from shelf once in cart), like today's
-    `Book.taken` ([`bookstore.py:154`](../../bookstore.py#L154)).
+    `Book.taken` (the original prototype).
 
 ### 3b. Background spine (blurred)
 Decorative spines behind the checkout desk and detail screen. Flatter 2-stop
@@ -260,7 +260,7 @@ Reused on screens 02 and 04 (and referenced on 01 as a distant silhouette).
 - **Cart:** translucent wire basket (repeating-line texture), handle, two wheels,
   and book-tops poking out (small rounded rects in genre hues). ~120px wide.
 - The existing front-facing `Mira` + `draw_cart`
-  ([`bookstore.py:172`](../../bookstore.py#L172), [`:300`](../../bookstore.py#L300))
+  (the original prototype)
   already handle walking/bob/cart-follow — **restyle** them to this behind-view
   night palette rather than rewriting the motion.
 - Distant **reader silhouette** (screen 01) is a simpler two-blob version.
@@ -275,7 +275,7 @@ Shared background pieces; detailed per-screen but reusable:
 |-------|-------|-------|
 | **Starfield** | all | Fixed scatter of `STAR` dots + one `tw`-twinkling overlay layer |
 | **Night gradient** | all | `NIGHT_TOP`→`NIGHT_BOTTOM` + warm top radial `glow` |
-| **Shelf plank** | 02, 04 | 15px wood gradient bar, radius 3, top highlight — generalizes [`bookstore.py:269`](../../bookstore.py#L269) |
+| **Shelf plank** | 02, 04 | 15px wood gradient bar, radius 3, top highlight — generalizes the original prototype |
 | **Hanging lantern** | 02 | Cord + rounded lamp, radial fill, `pulse` glow (design system §5) |
 | **Hanging desk lamp** | 04 | Cone glow pool over the desk |
 | **Desk** | 04 | Big wood gradient block `DESK_TOP`→`DESK_BOTTOM`, lip highlight |
@@ -286,7 +286,7 @@ Shared background pieces; detailed per-screen but reusable:
 ## 16. Feedback: `Pop`
 
 Floating "+1" / "On list!" / coin-spend text already exists
-([`bookstore.py:342`](../../bookstore.py#L342)) — reuse verbatim for:
+(the original prototype) — reuse verbatim for:
 - add-to-cart confirmation ("Added"),
 - quest tick ("Quest +1"),
 - coin changes at checkout.
@@ -300,7 +300,7 @@ primitives.py   §0 helpers (vgradient, glow, drop_shadow, render_tracked, coin_
 widgets.py      Button, draw_spine, draw_cover, draw_tooltip, draw_pill,
                 progress_bar, draw_quest, draw_ledger, draw_receipt,
                 coin_value, cart_badge
-actors.py       Mira (behind + front), Cart, reader silhouette   (restyled from bookstore.py)
+actors.py       Mira (behind + front), Cart, reader silhouette   (restyled from the original prototype)
 furniture.py    starfield, night_bg, shelf_plank, lantern, desk_lamp, desk, floor_fade
 ```
 

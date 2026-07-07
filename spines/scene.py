@@ -2,7 +2,7 @@
 Spines & Starlight — scene framework.
 
 The Scene protocol, the shared game Context, and the scene-stack transition
-machine that replaces bookstore.py's single hardcoded loop. See
+machine that drives the whole game. See
 docs/spines-and-starlight/03-screen-flow.md.
 """
 

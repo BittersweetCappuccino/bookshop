@@ -1,8 +1,7 @@
 """
 Spines & Starlight — application entry point.
 
-The scene-stack main loop that replaces bookstore.py's single hardcoded loop
-(screen-flow §5).
+The scene-stack main loop that drives the whole game (screen-flow §5).
 
 Display model: scenes always author in 1280x720 logical space. At startup we pick
 a scale that fits the player's desktop, render the frame onto a device-resolution

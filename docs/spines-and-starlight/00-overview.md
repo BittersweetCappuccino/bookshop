@@ -2,7 +2,7 @@
 
 > **Source of truth:** [`docs/Spines_and_Starlight_UI_Concept.html`](../Spines_and_Starlight_UI_Concept.html)
 > A concept-art board of five game screens for a cozy fantasy bookshop game.
-> **Target:** extend the existing pygame game in [`bookstore.py`](../../bookstore.py).
+> **Target:** extend the existing pygame game in the original prototype.
 
 This folder is the implementation spec derived from that concept. Read this
 page first, then the design system, then the per-screen specs.
@@ -18,7 +18,7 @@ The mood is warm, quiet, and a little magical — deep plum night, gold starligh
 serif type.
 
 It is a **richer reimagining** of the game that already exists in
-[`bookstore.py`](../../bookstore.py) ("The Little Bookshop"), which today is a
+the original prototype ("The Little Bookshop"), which today is a
 single screen: Mira walks a shelf, clicks books that match a color list, and
 wheels a cart to a checkout zone. Spines & Starlight keeps that spine — walk,
 gather, checkout — and expands it into five distinct screens with real book
@@ -65,7 +65,7 @@ input — lives in [`03-screen-flow.md`](03-screen-flow.md).
 
 ## 4. How this maps onto the existing game
 
-| Concept element | Today in `bookstore.py` | Change needed |
+| Concept element | Today in the original prototype | Change needed |
 |-----------------|-------------------------|---------------|
 | 5 screens | 1 screen (shop only) | Introduce a **scene/state machine** (see flow doc) |
 | Books with title/author/genre/price | Books are colored rectangles keyed by color name | Replace `Book` color model with a data-driven catalog ([`02-data-model.md`](02-data-model.md)) |
@@ -82,7 +82,7 @@ screen 02 — reuse it rather than rewriting.
 ## 5. Resolution & scaling
 
 - **Concept canvas:** every screen is drawn at **1280 × 720**.
-- **Current game window:** **960 × 600** (`W, H` in [`bookstore.py:33`](../../bookstore.py#L33)).
+- **Current game window:** **960 × 600** (`W, H` in the original prototype).
 
 **Recommendation: adopt 1280 × 720 as the game canvas.** The concept's layouts,
 type sizes, and paddings are all specified in 1280×720 space; matching it lets us

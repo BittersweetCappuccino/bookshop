@@ -14,7 +14,7 @@ The payment step and emotional payoff: a lamplit desk, the shopkeeper, Mira from
 the near side, and a warm paper receipt listing the purchase. Confirming here is
 the one transaction that spends coins and grows the collection
 ([`03-screen-flow.md`](03-screen-flow.md) §6). Successor to the current game's
-checkout zone + "Thanks for shopping" veil ([`bookstore.py:445`](../../bookstore.py#L445)).
+checkout zone + "Thanks for shopping" veil (the original prototype).
 
 ## 2. Layout map (1280×720)
 
@@ -89,10 +89,10 @@ the 5 books totalling 70 ([`02-data-model.md`](02-data-model.md) §3–4).
 After a successful commit, present a warm confirmation (the richer successor to
 today's veil + "Thanks for shopping, Mira!"):
 
-- Dim the scene with a plum veil (as [`bookstore.py:446`](../../bookstore.py#L446)).
+- Dim the scene with a plum veil (as the original prototype).
 - Message: "Thank you for reading" / "Your tales are gathered." Cormorant `CREAM`.
 - Optional: a receipt "stamp" flourish, a coin-spend `Pop`, and the cash chime
-  already in the game ([`bookstore.py:365`](../../bookstore.py#L365) `cash`).
+  already in the game (the original prototype `cash`).
 - **Any key** → `ctx.go(TITLE)`. (Cart is now empty; a fresh run starts from the
   menu.)
 

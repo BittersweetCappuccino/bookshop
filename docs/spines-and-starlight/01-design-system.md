@@ -42,7 +42,7 @@ def oklch_to_rgb(L, C, h):
 > `pygame.Surface((w,h), pygame.SRCALPHA)` with `(r, g, b, a)` where
 > `a = round(alpha * 255)`, then `blit`. This is the same pattern the current
 > game already uses for the shopping-list note and the checkout veil
-> ([`bookstore.py:322`](../../bookstore.py#L322), [`bookstore.py:446`](../../bookstore.py#L446)).
+> (the original prototype).
 
 ### 1.2 Core palette (converted)
 
@@ -182,7 +182,7 @@ not woff2**, so bundle the TTFs.
 Download both families from Google Fonts (SIL Open Font License) into
 `assets/fonts/`. Load with `pygame.font.Font(path, size)`. If a bundled file is
 missing, fall back to `pygame.font.SysFont(chain, size, bold=…, italic=…)`. The
-current game already uses `georgia` ([`bookstore.py:65`](../../bookstore.py#L65)),
+current game already uses `georgia` (the original prototype),
 which is the acceptable last resort.
 
 Suggested loader:
@@ -231,11 +231,11 @@ def load_font(path, size, sysfallback, bold=False, italic=False):
   **24** between shelves.
 - **Shadows** (pygame has no box-shadow): fake with a blurred/again-alpha
   ellipse or an offset dark rounded rect beneath the element. The current game
-  already fakes a shadow under Mira ([`bookstore.py:200`](../../bookstore.py#L200)).
+  already fakes a shadow under Mira (the original prototype).
   A reusable `drop_shadow(surf, rect, ...)` belongs in the component library.
 - **Glows/halos:** a soft radial — draw a large `SRCALPHA` ellipse of the accent
   color at low alpha behind the element (see the counter halo,
-  [`bookstore.py:284`](../../bookstore.py#L284)). Coins, lanterns, the floating
+  the original prototype). Coins, lanterns, the floating
   book, and hover highlights all use this.
 
 ---
@@ -244,7 +244,7 @@ def load_font(path, size, sysfallback, bold=False, italic=False):
 
 The concept defines three CSS keyframe animations. All are subtle and looping.
 Drive them from a per-frame counter `t` (the game already increments one,
-[`bookstore.py:372`](../../bookstore.py#L372)) at 60 FPS.
+the original prototype) at 60 FPS.
 
 | Name | CSS | Meaning | pygame translation |
 |------|-----|---------|--------------------|
@@ -258,9 +258,9 @@ worth replicating. Stagger multiple lanterns/stars by adding a per-instance
 phase offset to `t`.
 
 **Existing motions to reuse:** Mira's walk bob/arm-swing
-([`bookstore.py:197`](../../bookstore.py#L197)), the checkout halo pulse
-([`bookstore.py:283`](../../bookstore.py#L283)), and `Pop` floating "+1" text
-([`bookstore.py:342`](../../bookstore.py#L342)) — the same `Pop` works for the
+(the original prototype), the checkout halo pulse
+(the original prototype), and `Pop` floating "+1" text
+(the original prototype) — the same `Pop` works for the
 "On list!" / coin-spend feedback in the new shop.
 
 ---

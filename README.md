@@ -1,67 +1,113 @@
-# BookShop: Spines & Starlight
+# Spines & Starlight
 
-A cozy fantasy bookshop game, lit by falling stars. Browse genre aisles, pull
+A cozy fantasy bookshop game, lit by falling stars. Walk the genre aisles, pull
 volumes off the shelf to read them, fill a cart against a "star-purse" coin
-budget, and pay the shopkeeper at a lamplit desk.
+budget, and pay the shopkeeper at a lamplit desk — all in deep-plum night, gold
+starlight, and serif type.
 
-The project is in two layers:
+*Spines & Starlight* is a complete five-screen game written in Python with
+[pygame](https://www.pygame.org/). It started as a concept-art board and written
+spec (under [`docs/`](docs/)) and is now fully implemented in the
+[`spines/`](spines/) package.
 
-- **A playable prototype** — [`bookstore.py`](bookstore.py), *"The Little
-  Bookshop"*: a single-screen point-and-click where Mira walks a shelf, gathers
-  the books on a shopping list, and wheels her cart to checkout.
-- **A design concept and spec** — *Spines & Starlight*: a richer, five-screen
-  reimagining of that prototype. The concept art lives in
-  [`docs/Spines_and_Starlight_UI_Concept.html`](docs/Spines_and_Starlight_UI_Concept.html)
-  and the full implementation documentation is in
-  [`docs/spines-and-starlight/`](docs/spines-and-starlight/).
+> **Why this exists.** As someone who loves books — reading them, buying far too
+> many, and even writing — and who is genuinely fascinated by AI, I wanted a
+> project that brought both worlds together. *Spines & Starlight* was built as an
+> exploration of Claude Code's (Anthropic's agentic coding tool) ability to design
+> and implement a complete game in Python — from concept art to a playable build.
 
 ---
 
-## Running the prototype
+## Running the game
 
-Requires Python 3 and [pygame](https://www.pygame.org/) (the maintained
-`pygame-ce` fork is pinned in [`requirements.txt`](requirements.txt)).
+Requires **Python 3.10+**. The only dependency — pygame (the maintained
+`pygame-ce` fork) — is pinned in [`requirements.txt`](requirements.txt).
 
-```bash
-pip install -r requirements.txt   # installs pygame-ce
-python bookstore.py
+**1. Clone the project and create a virtual environment.**
+
+_Windows (PowerShell):_
+
+```powershell
+git clone https://github.com/BittersweetCappuccino/bookshop.git
+cd bookshop
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-A window opens at 960×600.
+_macOS / Linux:_
 
-![The Little Bookshop prototype — Mira and her cart in front of three bookshelves, a shopping list in the top-left, and the checkout desk on the right](docs/images/prototype-bookshop.png)
+```bash
+git clone https://github.com/BittersweetCappuccino/bookshop.git
+cd bookshop
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+```
 
-*The prototype today: Mira gathers books from the shelves while a shopping list
-tracks her progress toward the checkout desk.*
+**2. Run the game** using the virtual environment's Python:
+
+```text
+.venv\Scripts\python.exe -m spines     # Windows
+.venv/bin/python -m spines             # macOS / Linux
+```
+
+> Tip: if you `activate` the environment first (`.venv\Scripts\activate` on
+> Windows, `source .venv/bin/activate` on macOS/Linux), you can just run
+> `python -m spines`.
+
+The window sizes itself to fit your display and is resizable; **F11** toggles
+fullscreen. No asset files are needed — the art is drawn in code, the fonts are
+bundled, and the music and chimes are generated procedurally.
 
 ### Controls
 
 | Input | Action |
 |-------|--------|
-| Arrow keys / A, D | Walk Mira left and right |
-| Click a nearby book | Add it to the cart |
-| Walk to the glowing counter (right) | Check out |
-| M | Mute / unmute music |
-| R | New list & restock |
-| Esc | Quit |
-
-Mira has a shopping list (top-left) of books to find by color. Click the ones
-that match, and once the list is complete, wheel the cart to the checkout
-counter. The music is generated procedurally at startup — no audio files needed.
+| Arrow keys / A, D | Walk Mira along the aisles (in the Bookshop) |
+| Hover a nearby spine | Preview a book in a tooltip |
+| **E** | Add the hovered book to your cart |
+| Click a spine | Open its close-up — cover, blurb, price |
+| **C** | Open your cart |
+| Enter / Click | Confirm: start, add, proceed, complete purchase |
+| **Esc** | Back one screen (and quit from the title) |
+| **M** | Mute / unmute music |
+| **F11** | Toggle fullscreen |
 
 ---
 
-## The Spines & Starlight concept
+## The game
 
-*Spines & Starlight* keeps the prototype's core loop — walk, gather, checkout —
-and expands it into five screens with real book data, an economy, and a menu.
-The look is deep-plum night, gold starlight, and serif type (Cormorant Garamond
-and Spectral).
+Five screens, plus two menu screens, sharing one cart, wallet, and quest:
 
-### Preview
+- **Title & Start Menu** — the threshold as the stars begin to fall: *New Story*,
+  *Continue*, *Your Collection*, *Settings*.
+- **The Bookshop (Genre Aisles)** — the hub. Walk Mira (seen from behind) past
+  four genre aisles — Fantasy, Romance, Mystery, Science Fiction — each a shelf of
+  colour-coded spines. Hover a nearby spine for its tooltip, press **E** to drop
+  it in the cart, or click to read it. A quest ("gather five tales"), your coin
+  balance, and a cart badge sit in the HUD.
+- **Book Close-Up** — a large genre-hued cover with tags, a star rating, blurb,
+  page count, stock, and *Add to Cart*.
+- **Your Cart** — review your finds with a ledger: subtotal, a member's-charm
+  discount, the total, and what your star-purse balance becomes after. Remove any
+  book; proceed to the desk if you can afford it.
+- **The Checkout Desk** — a lamplit desk with the shopkeeper and a paper receipt.
+  *Complete Purchase* spends your coins, shelves the books in your Collection, and
+  clears the cart.
+- **Your Collection** & **Settings** — a gallery of the books you own, and a small
+  options panel (music toggle, fullscreen hint).
 
-These are how each screen is expected to look, captured from the concept art
-board — a target for the build, not the running game yet.
+Under the hood: a 48-book catalog across four genres, a coin economy, a
+scene-stack state machine, a soft procedural music-box score with chimes, and the
+**Cormorant Garamond** + **Spectral** serif fonts (SIL Open Font License) bundled
+in [`spines/assets/fonts/`](spines/assets/fonts/).
+
+---
+
+## The concept we built toward
+
+The game was designed against a concept-art board — these five screens are the
+targets the build reproduces. The full board is in
+[`docs/Spines_and_Starlight_UI_Concept.html`](docs/Spines_and_Starlight_UI_Concept.html).
 
 **1. Title & Start Menu** — the threshold, as the stars begin to fall.
 
@@ -86,15 +132,15 @@ shelves; hover a spine for its details.
 
 ### Documentation
 
-The [`docs/spines-and-starlight/`](docs/spines-and-starlight/) folder is a
-complete spec for building these screens by extending the pygame prototype:
+[`docs/spines-and-starlight/`](docs/spines-and-starlight/) is the full spec behind
+the five screens:
 
 | Doc | Covers |
 |-----|--------|
-| [`00-overview.md`](docs/spines-and-starlight/00-overview.md) | Vision, the five-screen map, and how it extends the prototype |
+| [`00-overview.md`](docs/spines-and-starlight/00-overview.md) | Vision, the five-screen map, and scope |
 | [`01-design-system.md`](docs/spines-and-starlight/01-design-system.md) | Palette (oklch → pygame RGB), typography, spacing, motion |
 | [`02-data-model.md`](docs/spines-and-starlight/02-data-model.md) | Book / cart / economy / quest types and the full book catalog |
-| [`03-screen-flow.md`](docs/spines-and-starlight/03-screen-flow.md) | Scene state machine, transitions, and the main-loop rewrite |
+| [`03-screen-flow.md`](docs/spines-and-starlight/03-screen-flow.md) | Scene state machine, transitions, and the main loop |
 | [`04-components.md`](docs/spines-and-starlight/04-components.md) | Reusable widgets (buttons, spines, tooltips, panels, actors) |
 | `screen-01`…`screen-05` | Per-screen layout specs with acceptance checklists |
 
@@ -106,45 +152,23 @@ Start with the overview.
 
 ```
 bookshop/
-├── bookstore.py                       # playable prototype ("The Little Bookshop")
 ├── README.md
 ├── requirements.txt                   # pygame-ce
-├── spines/                            # the Spines & Starlight game (python -m spines)
-│   ├── theme.py content.py scene.py app.py   # tokens, data, framework, main loop
-│   ├── primitives.py widgets.py fonts.py furniture.py actors.py
+├── spines/                            # the game (run: python -m spines)
+│   ├── __main__.py  app.py            # entry point + scene-stack main loop
+│   ├── theme.py  content.py  scene.py # tokens, data/catalog, scene framework
+│   ├── primitives.py  widgets.py  fonts.py  furniture.py  actors.py  audio.py
+│   ├── assets/fonts/                  # bundled Cormorant Garamond + Spectral (OFL)
 │   └── scenes/                        # title, shop, detail, cart, checkout, collection, settings
 └── docs/
     ├── Spines_and_Starlight_UI_Concept.html   # concept art board (5 screens)
-    ├── images/                                # README screenshots
+    ├── images/                                # concept screenshots
     └── spines-and-starlight/                  # implementation spec (10 docs)
 ```
 
 ## Status
 
-The prototype is playable today, and *Spines & Starlight* is now playable
-end-to-end (`python -m spines`) — you can walk Title → Shop → Detail → Cart →
-Checkout and back.
+*Spines & Starlight* is playable end-to-end (`python -m spines`) — Title → Shop →
+Detail → Cart → Checkout, and back to the menu with your purchases collected.
 
-### Implementation status
 
-Per-screen acceptance is tracked in each screen's spec doc (the `- [ ]`
-checklists). Verification so far is **headless** — smoke tests, logic
-assertions, and rendered screenshots — not live playtesting. (Audio in
-particular has only had its code paths exercised; it hasn't been heard.)
-
-| Screen | State | Acceptance |
-|--------|-------|-----------|
-| 01 · Title | Complete | 8 / 8 |
-| 02 · Bookshop | Complete | 8 / 8 |
-| 03 · Cart | Complete | 9 / 9 |
-| 04 · Checkout | Complete | 7 / 7 |
-| 05 · Book Close-Up | Complete | 7 / 7 |
-
-All five screens meet their acceptance checklists. Audio (procedural music +
-chimes) is wired via [`spines/audio.py`](spines/audio.py), and the **Cormorant
-Garamond** and **Spectral** fonts (SIL Open Font License) are bundled in
-[`spines/assets/fonts/`](spines/assets/fonts/) — the Cormorant weights were
-instantiated from its variable font, and each family ships its `OFL` license.
-The **Collection** (a gallery of purchased books) and **Settings** (music toggle
-+ fullscreen/mute hints) menu screens are built too — so every title-menu entry
-now leads somewhere. The main thing left is a live playtest **with sound on**.

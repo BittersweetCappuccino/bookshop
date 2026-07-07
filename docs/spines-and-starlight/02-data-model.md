@@ -294,10 +294,10 @@ class Quest:
 ```
 
 This generalizes the current game's color shopping-list
-([`bookstore.py:249`](../../bookstore.py#L249) `make_list`): instead of "collect
+(the original prototype `make_list`): instead of "collect
 these 4 colors," the quest is "gather N tales" (optionally constrained by genre
 later). The completion gate replaces `all_done`
-([`bookstore.py:375`](../../bookstore.py#L375)).
+(the original prototype).
 
 ---
 
@@ -328,7 +328,7 @@ class Profile:
 
 ## 9. Mapping from the current `Book`
 
-Today's `Book` ([`bookstore.py:145`](../../bookstore.py#L145)) stores a color
+Today's `Book` (the original prototype) stores a color
 name and a pygame `Rect`, with `taken`/`hover` flags. Migration:
 
 | Old | New |

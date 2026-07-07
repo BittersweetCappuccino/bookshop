@@ -1,4 +1,4 @@
-# Spines & Starlight / The Little Bookshop — runtime dependencies
+# Spines & Starlight — runtime dependencies
 # Install with:  pip install -r requirements.txt
 #
 # pygame-ce is the community-maintained fork of pygame; it provides the same

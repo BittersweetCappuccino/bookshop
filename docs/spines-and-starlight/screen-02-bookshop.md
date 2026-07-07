@@ -8,7 +8,7 @@
 > · flow: [`03-screen-flow.md`](03-screen-flow.md).
 
 This is the largest screen and the direct successor to the current game's single
-shop view ([`bookstore.py`](../../bookstore.py)). Reuse walking, cart-follow, and
+shop view (the original prototype). Reuse walking, cart-follow, and
 `Pop` feedback; replace colored rectangles with genre-hued, data-driven spines.
 
 ---
@@ -75,7 +75,7 @@ Rendered top→bottom in order Fantasy, Romance, Mystery, Sci-Fi
 
 ### 4c. Shelf plank
 - Height **15**, radius 3, wood gradient `WOOD_TOP`→`WOOD_BOTTOM`, top highlight
-  `WOOD_HI`, drop shadow. Generalizes [`bookstore.py:269`](../../bookstore.py#L269).
+  `WOOD_HI`, drop shadow. Generalizes the original prototype.
 
 ## 5. Actor: Mira + cart
 
@@ -85,8 +85,8 @@ Rendered top→bottom in order Fantasy, Romance, Mystery, Sci-Fi
   `Mira`/`draw_cart` to the behind-view night palette; keep the walk bob, arm
   swing, and cart-follow logic.
 - **Movement:** arrows / A,D, clamped to the aisle span (reuse
-  [`bookstore.py:181`](../../bookstore.py#L181)). Mira's X gates which spines are
-  "near" enough to hover/add (proximity ~130px, [`bookstore.py:417`](../../bookstore.py#L417)).
+  the original prototype). Mira's X gates which spines are
+  "near" enough to hover/add (proximity ~130px, the original prototype).
 
 ## 6. HUD
 
@@ -139,7 +139,7 @@ adding when the cart already holds that book is a no-op (`Cart.add` dedupes).
 - Twinkling starfield (`tw`).
 - Mira walk bob / arm swing (existing).
 - Spine hover lift + glow.
-- `Pop` "Added" / "Quest +1" feedback on add ([`bookstore.py:342`](../../bookstore.py#L342)).
+- `Pop` "Added" / "Quest +1" feedback on add (the original prototype).
 - Cart `+N` badge fade.
 
 ## 10. States
@@ -149,7 +149,7 @@ adding when the cart already holds that book is a no-op (`Cart.add` dedupes).
 | Browsing | default | Full scene, tooltip hidden |
 | Hovering | spine hovered & near | Tooltip + spine highlight |
 | Added | E / Add | Spine gone, HUD counts up, Pop feedback |
-| Quest complete | `cart.count ≥ 5` | Quest bar full; optional prompt "Head to the cart" (successor to the current "List complete!" line, [`bookstore.py:434`](../../bookstore.py#L434)) |
+| Quest complete | `cart.count ≥ 5` | Quest bar full; optional prompt "Head to the cart" (successor to the current "List complete!" line, the original prototype) |
 | Out of range | Mira far from hovered spine | No tooltip; spine not highlighted |
 
 ## 11. Implementation notes
@@ -159,7 +159,7 @@ adding when the cart already holds that book is a no-op (`Cart.add` dedupes).
   and data-driven, plus HUD/tooltip.
 - Build spines once per run into a list of `(Book, rect)` laid out along each
   aisle; recompute hover each frame from mouse + Mira proximity (mirrors
-  [`bookstore.py:416`](../../bookstore.py#L416)).
+  the original prototype).
 - Cache the static layer (background, shelves, planks, floor, lantern bodies);
   redraw per frame only: lantern glow pulse, twinkle, Mira+cart, HUD, tooltip,
   Pops, and spines whose hover/taken state changed.
