@@ -216,6 +216,58 @@ def _spine_title(surf, r, book):
 
 
 # ----------------------------------------------------------------------
+# Book cover (§4) — the large detail cover; emblem is generic per genre
+# ----------------------------------------------------------------------
+_COVER_SUBTITLE = {"the-ashen-crown": "A Novel of the Star-Court"}
+
+
+def draw_cover(surf, rect, book):
+    rect = pygame.Rect(rect)
+    hue = book.hue
+    pr.glow(surf, rect.center, rect.h * 0.62, (*theme.oklch_to_rgb(0.5, 0.12, hue), 60))
+
+    top = theme.oklch_to_rgb(0.42, 0.13, hue)
+    bot = theme.oklch_to_rgb(0.20, 0.09, hue + 2)
+    pr.round_rect(surf, rect, bot, 10)
+    pr.vgradient(surf, rect.inflate(-4, -4), top, bot)
+    pr.alpha_rect(surf, (rect.x + 4, rect.y + 4, 8, rect.h - 8), (255, 255, 255, 26), 2)  # spine hi
+    pr.round_rect(surf, rect.inflate(-40, -40), (*theme.GOLD, 150), 6, width=1)            # frame
+
+    sub = _COVER_SUBTITLE.get(book.id, content.GENRES[book.genre].subtitle)
+    pr.blit(surf, pr.render_tracked(sub.upper(), fonts.body(10), theme.GOLD, 3),
+            (rect.centerx, rect.y + 42), anchor="center")
+
+    ec = (rect.centerx, rect.centery - 18)
+    pr.circle(surf, ec, 34, theme.GOLD, width=2)
+    pr.circle(surf, ec, 15, theme.GOLD)
+    for dx, dy in ((-48, 0), (48, 0), (0, -48), (0, 48)):
+        pr.line(surf, (ec[0] + dx * 0.55, ec[1] + dy * 0.55), (ec[0] + dx, ec[1] + dy), theme.GOLD, 2)
+
+    _cover_title(surf, book.title, (rect.centerx, rect.bottom - 116), rect.w - 48)
+    pr.blit(surf, pr.render_tracked(book.author.upper(), fonts.body(11),
+            theme.oklch_to_rgb(0.75, 0.10, hue), 2), (rect.centerx, rect.bottom - 40), anchor="center")
+
+
+def _cover_title(surf, title, center, maxw):
+    font = fonts.display(40, bold=True)
+    lines, line = [], ""
+    for w in title.split():
+        t = f"{line} {w}".strip()
+        if font.size(t)[0] > pr.sv(maxw) and line:
+            lines.append(line)
+            line = w
+        else:
+            line = t
+    if line:
+        lines.append(line)
+    y = center[1]
+    for ln in lines[:2]:
+        pr.draw_text(surf, ln, font, (0, 0, 0), (center[0] + 1, y + 2), center=True, alpha=120)  # shadow
+        pr.draw_text(surf, ln, font, theme.CREAM, (center[0], y), center=True)
+        y += 42
+
+
+# ----------------------------------------------------------------------
 # Book tooltip / info card (§5)
 # ----------------------------------------------------------------------
 def draw_tooltip(surf, book, anchor):
