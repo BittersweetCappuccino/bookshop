@@ -96,6 +96,19 @@ def polygon(surf, points, color, width=0):
     pygame.draw.polygon(surf, color, [sp(p) for p in points], w)
 
 
+def polygon_alpha(surf, points, rgba):
+    """A translucent filled polygon (pygame.draw has no per-shape alpha)."""
+    xs = [p[0] for p in points]
+    ys = [p[1] for p in points]
+    minx, miny = min(xs), min(ys)
+    w, h = sv(max(xs) - minx), sv(max(ys) - miny)
+    if w <= 0 or h <= 0:
+        return
+    sub = pygame.Surface((w, h), pygame.SRCALPHA)
+    pygame.draw.polygon(sub, rgba, [(sv(px - minx), sv(py - miny)) for px, py in points])
+    surf.blit(sub, sp((minx, miny)))
+
+
 def dashed_line(surf, a, b, color, dash=6, gap=4, width=1):
     ax, ay = a
     bx, by = b
@@ -153,12 +166,19 @@ def glass_panel(surf, rect, radius=14, fill=theme.PANEL_BG, alpha=theme.A_PANEL,
 # ----------------------------------------------------------------------
 # Glows & shadows
 # ----------------------------------------------------------------------
-def glow(surf, center, radius, rgba):
-    """Soft radial halo — a big low-alpha ellipse."""
+def glow(surf, center, radius, rgba, steps=16):
+    """Soft radial halo with a smooth falloff (alpha peaks at center → 0 edge)."""
     r = sv(radius)
-    d = r * 2
-    halo = pygame.Surface((d, d), pygame.SRCALPHA)
-    pygame.draw.ellipse(halo, rgba, halo.get_rect())
+    if r <= 0:
+        return
+    color = rgba[:3]
+    peak = rgba[3] if len(rgba) > 3 else 255
+    halo = pygame.Surface((r * 2, r * 2), pygame.SRCALPHA)
+    for i in range(steps, 0, -1):          # outer (faint) → inner (bright)
+        rr = r * i // steps
+        a = int(peak * (1 - i / steps))
+        if a > 0:
+            pygame.draw.circle(halo, (*color, a), (r, r), rr)
     cx, cy = sp(center)
     surf.blit(halo, (cx - r, cy - r))
 

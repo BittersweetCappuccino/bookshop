@@ -2,9 +2,48 @@
 
 import pygame
 
-from .. import theme, fonts, primitives as pr, widgets, content
+from .. import theme, fonts, primitives as pr, widgets, content, actors
 from .. import scene as sc
 from .base import starfield
+
+_VIOLET_TOP = theme.oklch_to_rgb(0.42, 0.13, 288)
+_VIOLET_BOT = theme.oklch_to_rgb(0.22, 0.10, 290)
+
+
+def _page_lines(surf, cx, cy, side, hw, ph):
+    """Faux text on one page of the open book (side -1 left / +1 right)."""
+    x0 = cx + side * 14
+    rows = [(0.18, theme.GOLD, 3, 0.62),      # gilded heading
+            (0.36, (176, 148, 112), 2, 1.0),
+            (0.48, (176, 148, 112), 2, 0.86),
+            (0.60, (176, 148, 112), 2, 1.0),
+            (0.72, (176, 148, 112), 2, 0.7)]
+    for fy, col, wdt, frac in rows:
+        y = cy - ph + fy * (2 * ph)
+        x1 = cx + side * (14 + (hw - 28) * frac)
+        pr.line(surf, (x0, y), (x1, y), col, wdt)
+    if side > 0:  # small gold diamond on the right page
+        dx, dy = cx + side * (hw - 26), cy + ph - 22
+        pr.polygon(surf, [(dx, dy - 5), (dx + 5, dy), (dx, dy + 5), (dx - 5, dy)], theme.GOLD, 0)
+
+
+def _open_book(surf, cx, cy):
+    """The floating open book: halo, light beam, two pages, spine (§3.5)."""
+    pr.glow(surf, (cx, cy), 210, (*theme.GOLD, 85))                       # 5a halo
+    pr.polygon_alpha(surf, [(cx, cy - 155), (cx - 92, cy + 78), (cx + 92, cy + 78)],
+                     (*theme.GOLD, 26))                                    # 5d light beam
+    hw, ph, inset = 140, 66, 18
+    left = [(cx, cy - ph), (cx - hw, cy - ph + inset), (cx - hw, cy + ph - inset), (cx, cy + ph)]
+    right = [(cx, cy - ph), (cx + hw, cy - ph + inset), (cx + hw, cy + ph - inset), (cx, cy + ph)]
+    pr.polygon(surf, left, theme.CREAM_DIM, 0)
+    pr.polygon(surf, right, theme.CREAM, 0)
+    _page_lines(surf, cx, cy, -1, hw, ph)
+    _page_lines(surf, cx, cy, +1, hw, ph)
+    pr.polygon(surf, left, (*theme.PANEL_BORDER, 160), 1)
+    pr.polygon(surf, right, (*theme.PANEL_BORDER, 160), 1)
+    spine = pygame.Rect(round(cx - 7), round(cy - 75), 14, 150)            # 5b spine
+    pr.vgradient(surf, spine, _VIOLET_TOP, _VIOLET_BOT)
+    pr.round_rect(surf, spine, (*theme.GOLD, 130), 3, width=1)
 
 
 class TitleScene(sc.Scene):
@@ -44,8 +83,14 @@ class TitleScene(sc.Scene):
     def draw(self, surf, ctx):
         pr.page_bg(surf)
         starfield().draw(surf, ctx.t)
+        pr.vfade(surf, (0, theme.CANVAS_H - 140, theme.CANVAS_W, 140),
+                 theme.NIGHT_BOTTOM, 0, 235)                    # bottom vignette (§3.7)
 
-        # eyebrow + hero wordmark
+        # reader silhouette below the floating book, then the book on top
+        actors.draw_reader(surf, 980, 660, scale=1.7)
+        _open_book(surf, 980, 300 + theme.float_dy(ctx.t))      # bobs (motion §5)
+
+        # left group: eyebrow + hero wordmark
         eye = pr.render_tracked("A BOOKSHOP TALE", fonts.body(theme.Size.EYEBROW),
                                 theme.EYEBROW_GOLD, 6)
         pr.blit(surf, eye, (252, 180))
@@ -56,14 +101,6 @@ class TitleScene(sc.Scene):
 
         for b in self.buttons:
             b.draw(surf, ctx.mouse, ctx.t)
-
-        # floating open-book placeholder on the right, bobbing (motion §5)
-        dy = theme.float_dy(ctx.t)
-        book = pygame.Rect(880, 250 + dy, 200, 280)
-        pr.glow(surf, book.center, 200, (*theme.GOLD, 30))
-        pr.vgradient(surf, book, theme.oklch_to_rgb(0.42, 0.13, 288),
-                     theme.oklch_to_rgb(0.20, 0.09, 290))
-        pr.round_rect(surf, book, (*theme.GOLD, 120), 8, width=2)
 
         pr.draw_text(surf, "Enter to begin  ·  Esc to close the shop",
                      fonts.body(theme.Size.SMALL), theme.TEXT_FAINT,

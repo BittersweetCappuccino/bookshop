@@ -50,8 +50,7 @@ def desk_lamp(surf, cx, t):
     """Hanging lamp: cord, shade, and a breathing warm glow (§3)."""
     a = theme.pulse_alpha(t)
     pr.line(surf, (cx, 0), (cx, 112), (56, 42, 28), 2)
-    for r, base in ((150, 14), (100, 20), (60, 30)):   # soft warm falloff
-        pr.glow(surf, (cx, 152), r, (*theme.LANTERN_LIGHT, int(base * a)))
+    pr.glow(surf, (cx, 152), 150, (*theme.LANTERN_LIGHT, int(95 * a)))
     import pygame
     shade = pygame.Rect(cx - 41, 112, 82, 40)
     pr.vgradient(surf, shade, theme.LANTERN_LIGHT, theme.LANTERN_DARK)

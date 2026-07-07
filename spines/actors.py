@@ -76,6 +76,20 @@ class Mira:
         pr.glow(surf, (x + 12 * s * self.facing, hy), 18 * s, (*theme.LANTERN_LIGHT, 55))
 
 
+def draw_reader(surf, cx, feet_y, scale=1.7):
+    """A distant reader silhouette on the title screen — a simpler cousin of
+    behind-view Mira: two plum blobs + a gold rim-light (screen-01 §3.6)."""
+    s = scale
+    plum = (52, 36, 66)
+    bw, bh = 56 * s, 112 * s
+    pr.glow(surf, (cx - bw * 0.42, feet_y - bh * 0.6), 40 * s, (*theme.GOLD, 70))  # left rim-light
+    body = pygame.Rect(round(cx - bw / 2), round(feet_y - bh), round(bw), round(bh))
+    pr.round_rect(surf, body, plum, bw / 2)
+    hw, hh = 34 * s, 40 * s
+    head = pygame.Rect(round(cx - hw / 2), round(feet_y - bh - hh * 0.5), round(hw), round(hh))
+    pr.ellipse(surf, head, plum)
+
+
 def draw_keeper(surf, x, feet_y, t):
     """The shopkeeper behind the desk — a simple robed figure, front-facing (§6)."""
     pr.ellipse_alpha(surf, (x - 30, feet_y + 2, 60, 16), (0, 0, 0, 60))

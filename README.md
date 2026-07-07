@@ -133,7 +133,7 @@ assertions, and rendered screenshots — not live playtesting.
 
 | Screen | State | Acceptance |
 |--------|-------|-----------|
-| 01 · Title | First pass | 5 / 8 — placeholder book, no reader silhouette, no audio |
+| 01 · Title | Complete | 7 / 8 — audio (footer/music box) pending |
 | 02 · Bookshop | Complete | 7 / 8 — audio pending |
 | 03 · Cart | Complete | 9 / 9 |
 | 04 · Checkout | Complete | 7 / 7 |
