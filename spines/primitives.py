@@ -72,6 +72,48 @@ def round_rect(surf, rect, color, radius, width=0):
     pygame.draw.rect(surf, color, sr(rect), width=w, border_radius=sv(radius))
 
 
+# ----------------------------------------------------------------------
+# Scaled wrappers for raw pygame.draw shapes (logical coords in)
+# ----------------------------------------------------------------------
+def circle(surf, center, r, color, width=0):
+    w = 0 if width == 0 else max(1, sv(width))
+    pygame.draw.circle(surf, color, sp(center), max(1, sv(r)), w)
+
+
+def line(surf, a, b, color, width=1):
+    pygame.draw.line(surf, color, sp(a), sp(b), max(1, sv(width)))
+
+
+def ellipse(surf, rect, color, width=0):
+    w = 0 if width == 0 else max(1, sv(width))
+    pygame.draw.ellipse(surf, color, sr(rect), w)
+
+
+def polygon(surf, points, color, width=0):
+    w = 0 if width == 0 else max(1, sv(width))
+    pygame.draw.polygon(surf, color, [sp(p) for p in points], w)
+
+
+def ellipse_alpha(surf, rect, rgba):
+    """A translucent filled ellipse (e.g. actor shadows)."""
+    rect = sr(rect)
+    sub = pygame.Surface((rect.w, rect.h), pygame.SRCALPHA)
+    pygame.draw.ellipse(sub, rgba, sub.get_rect())
+    surf.blit(sub, rect.topleft)
+
+
+def vfade(surf, rect, color, a_top, a_bottom):
+    """Vertical alpha fade of one color (e.g. floor fade, glow columns)."""
+    rect = sr(rect)
+    if rect.h <= 0 or rect.w <= 0:
+        return
+    strip = pygame.Surface((1, rect.h), pygame.SRCALPHA)
+    for y in range(rect.h):
+        f = y / max(1, rect.h - 1)
+        strip.set_at((0, y), (*color, round(a_top + (a_bottom - a_top) * f)))
+    surf.blit(pygame.transform.scale(strip, (rect.w, rect.h)), rect.topleft)
+
+
 def alpha_rect(surf, rect, rgba, radius=0):
     """Translucent (optionally rounded) fill via an SRCALPHA sub-surface."""
     rect = sr(rect)
@@ -147,6 +189,32 @@ def draw_text(surf, text, font, color, pos, center=False, anchor="topleft", alph
     if alpha < 255:
         img.set_alpha(alpha)
     return blit(surf, img, pos, "center" if center else anchor)
+
+
+def draw_paragraph(surf, text, font, color, pos, width, line_h, max_lines=None):
+    """Word-wrap `text` to a logical `width`; returns the y after the last line.
+
+    `font` is device-sized; `width`/`line_h`/`pos` are logical.
+    """
+    max_w = sv(width)
+    x, y = pos
+    lines, line = [], ""
+    for w in text.split():
+        trial = f"{line} {w}".strip()
+        if font.size(trial)[0] > max_w and line:
+            lines.append(line)
+            line = w
+        else:
+            line = trial
+    if line:
+        lines.append(line)
+    if max_lines and len(lines) > max_lines:
+        lines = lines[:max_lines]
+        lines[-1] = lines[-1].rstrip() + "…"
+    for ln in lines:
+        draw_text(surf, ln, font, color, (x, y))
+        y += line_h
+    return y
 
 
 # ----------------------------------------------------------------------

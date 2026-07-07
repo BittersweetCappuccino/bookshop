@@ -144,6 +144,14 @@ GENRE_HUE = {
     "scifi": 238,     # blue
 }
 
+# Genre label colors (design system §2) — the tinted aisle headers.
+GENRE_LABEL = {
+    "fantasy": (246, 227, 184),
+    "romance": (255, 215, 205),
+    "mystery": (186, 231, 245),
+    "scifi": (197, 226, 254),
+}
+
 
 def spine_shades(H, i):
     """Deterministic per-book spine colors for hue H, shelf index i.
