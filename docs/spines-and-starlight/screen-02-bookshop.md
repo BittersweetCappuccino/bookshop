@@ -168,11 +168,12 @@ adding when the cart already holds that book is a no-op (`Cart.add` dedupes).
 
 ## 12. Acceptance checklist
 
-- [ ] Four aisles (Fantasy/Romance/Mystery/Sci-Fi) with genre-tinted labels + subtitles.
-- [ ] 12 genre-hued spines per aisle from the catalog, on wood planks; two pulsing lanterns.
-- [ ] Mira (from behind) + cart walk the aisles; proximity gates interaction.
-- [ ] Hovering a near spine shows the info tooltip with price and "Add · [E]".
-- [ ] **E**/Add adds in place (spine removed, cart+quest update, Pop); no coin spend.
-- [ ] Clicking a spine opens the Detail screen (05).
-- [ ] HUD: quest tracker with progress bar, coin balance, cart badge with +N.
-- [ ] **C**/cart icon opens the Cart (03); starfield twinkles; music continues.
+- [x] Four aisles (Fantasy/Romance/Mystery/Sci-Fi) with genre-tinted labels + subtitles.
+- [x] 12 genre-hued spines per aisle from the catalog, on wood planks; two pulsing lanterns.
+- [x] Mira (from behind) + cart walk the aisles; proximity gates interaction.
+- [x] Hovering a near spine shows the info tooltip with price and "Add · [E]".
+- [x] **E**/Add adds in place (spine removed, cart+quest update, Pop); no coin spend.
+- [x] Clicking a spine opens the Detail screen (05).
+- [x] HUD: quest tracker with progress bar, coin balance, cart badge with +N.
+- [ ] **C**/cart icon opens the Cart (03); starfield twinkles; music continues.  <!-- cart+twinkle done; audio deferred to Phase 4 -->
+

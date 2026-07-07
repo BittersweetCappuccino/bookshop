@@ -268,6 +268,92 @@ def _cover_title(surf, title, center, maxw):
 
 
 # ----------------------------------------------------------------------
+# Cart thumbnail (§4b) — the miniature cover in a cart row
+# ----------------------------------------------------------------------
+def draw_thumb(surf, rect, book):
+    rect = pygame.Rect(rect)
+    hue = book.hue
+    pr.round_rect(surf, rect, theme.oklch_to_rgb(0.20, 0.09, hue + 2), 3)
+    pr.vgradient(surf, rect.inflate(-2, -2), theme.oklch_to_rgb(0.42, 0.13, hue),
+                 theme.oklch_to_rgb(0.20, 0.09, hue + 2))
+    pr.round_rect(surf, rect.inflate(-8, -8), (*theme.GOLD, 110), 2, width=1)
+    ec = (rect.centerx, rect.centery - 6)
+    pr.circle(surf, ec, 8, theme.GOLD, width=1)
+    pr.circle(surf, ec, 3, theme.GOLD)
+    img = fonts.display(8, bold=True).render(book.title, True, theme.CREAM)
+    dev = pr.sr(rect)
+    prev = surf.get_clip()
+    surf.set_clip(dev)
+    surf.blit(img, img.get_rect(center=(dev.centerx, dev.centery + pr.sv(24))))
+    surf.set_clip(prev)
+
+
+# ----------------------------------------------------------------------
+# Ledger panel (§12) — the cart's right-column summary card
+# ----------------------------------------------------------------------
+def draw_ledger(surf, ledger, wallet, rect, mouse):
+    """Draw the ledger. Returns (proceed_rect_or_None, browse_rect) for clicks."""
+    rect = pygame.Rect(rect)
+    pr.glass_panel(surf, rect, radius=18, fill=theme.PANEL_BG2, alpha=theme.A_PANEL2)
+    x, w, y = rect.x + 26, rect.w - 52, rect.y + 22
+    pr.draw_text(surf, "Ledger", fonts.display(theme.Size.PANEL_HEAD), theme.CREAM, (x, y))
+    y += 48
+
+    def row(label, value, color, size=15):
+        pr.draw_text(surf, label, fonts.body(size), theme.TEXT_MUTED, (x, y))
+        pr.draw_text(surf, value, fonts.body(size), color, (x + w, y), anchor="topright")
+
+    row("Subtotal", str(ledger.subtotal), theme.TEXT)
+    y += 30
+    row("Member's charm", f"-{ledger.discount}", theme.MEMBER_CHARM)
+    y += 32
+    pr.line(surf, (x, y), (x + w, y), theme.PANEL_BORDER, 1)
+    y += 16
+    pr.draw_text(surf, "Total", fonts.display(theme.Size.CARD_TITLE), theme.CREAM, (x, y))
+    num = fonts.display(34, bold=True).render(str(ledger.total), True, theme.GOLD)
+    pr.blit(surf, num, (x + w, y - 6), anchor="topright")
+    coin_glyph(surf, (x + w - num.get_width() / theme.SCALE - 16, y + 12), 11)
+    y += 54
+
+    box = pygame.Rect(x, y, w, 92)
+    pr.glass_panel(surf, box, radius=12, fill=theme.PANEL_BG, alpha=153)
+    bx, bw, by = box.x + 14, box.w - 28, box.y + 14
+    pr.draw_text(surf, "Star-purse", fonts.body(12), theme.TEXT_MUTED, (bx, by))
+    pr.draw_text(surf, str(wallet.coins), fonts.body(12), theme.TEXT_MUTED, (bx + bw, by), anchor="topright")
+    by += 26
+    progress_bar(surf, (bx, by, bw, 8), ledger.total / max(1, wallet.coins))
+    by += 20
+    rem = ledger.remaining(wallet)
+    pr.draw_text(surf, "Remaining after", fonts.body(12), theme.TEXT_MUTED, (bx, by))
+    pr.draw_text(surf, f"{rem} coins", fonts.body(12, bold=True),
+                 theme.GOLD if rem >= 0 else theme.BADGE_RED, (bx + bw, by), anchor="topright")
+    y = box.bottom + 20
+
+    affordable = ledger.affordable(wallet) and ledger.subtotal > 0
+    pbtn = pygame.Rect(x, y, w, 52)
+    if affordable:
+        top, bot = theme.BTN_GOLD_TOP, theme.BTN_GOLD_BOT
+        if pbtn.collidepoint(mouse):
+            top = tuple(min(255, c + 16) for c in top)
+            bot = tuple(min(255, c + 16) for c in bot)
+        pr.drop_shadow(surf, pbtn, 12, offset=(0, 10), rgba=(90, 50, 10, 110))
+        pr.vgradient(surf, pbtn, top, bot)
+        pr.round_rect(surf, pbtn, (*theme.PANEL_BORDER, 255), 12, width=1)
+        pr.draw_text(surf, "Proceed to the Desk", fonts.display(theme.Size.MENU, bold=True),
+                     theme.BTN_GOLD_TEXT, pbtn.center, center=True)
+    else:
+        pr.alpha_rect(surf, pbtn, (*theme.BTN2_BG, 150), 12)
+        pr.round_rect(surf, pbtn, (*theme.BTN2_BORDER, 150), 12, width=1)
+        pr.draw_text(surf, "Proceed to the Desk", fonts.display(theme.Size.MENU),
+                     theme.TEXT_FAINT, pbtn.center, center=True)
+    y += 52 + 20
+    pr.draw_text(surf, "Keep browsing the aisles", fonts.body(12), theme.TEXT_FAINT,
+                 (rect.centerx, y), center=True)
+    browse = pygame.Rect(rect.centerx - 90, y - 2, 180, 22)
+    return (pbtn if affordable else None), browse
+
+
+# ----------------------------------------------------------------------
 # Book tooltip / info card (§5)
 # ----------------------------------------------------------------------
 def draw_tooltip(surf, book, anchor):

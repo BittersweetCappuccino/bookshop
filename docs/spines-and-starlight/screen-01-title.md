@@ -130,11 +130,12 @@ menu, Enter activates. Not required for a first pass.
 
 ## 10. Acceptance checklist
 
-- [ ] 1280×720 frame with night gradient, fixed stars, and a twinkling overlay.
-- [ ] Floating open book bobs (`fl`) with a gold halo and light beam.
-- [ ] Reader silhouette with gold rim-light, bottom vignette present.
-- [ ] Hero title "Spines / & Starlight" with italic gold second line.
-- [ ] Four-item menu; New Story is gold, others ghost; Continue disabled without a save.
-- [ ] Hover states on all buttons; New Story → `SHOP`.
-- [ ] Any-key advances to the default action; Esc quits.
-- [ ] Footer line present; music plays and respects mute.
+- [x] 1280×720 frame with night gradient, fixed stars, and a twinkling overlay.
+- [ ] Floating open book bobs (`fl`) with a gold halo and light beam.  <!-- first pass: placeholder rect, no pages/light beam -->
+- [ ] Reader silhouette with gold rim-light, bottom vignette present.  <!-- not built yet -->
+- [x] Hero title "Spines / & Starlight" with italic gold second line.
+- [x] Four-item menu; New Story is gold, others ghost; Continue disabled without a save.
+- [x] Hover states on all buttons; New Story → `SHOP`.
+- [x] Any-key advances to the default action; Esc quits.
+- [ ] Footer line present; music plays and respects mute.  <!-- footer present; audio deferred to Phase 4 -->
+

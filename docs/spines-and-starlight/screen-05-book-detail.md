@@ -131,10 +131,10 @@ fully-authored book; others use authored or placeholder blurb/rating/pages/copie
 
 ## 10. Acceptance checklist
 
-- [ ] Opens as an overlay over a dimmed `SHOP`; `Esc`/Back returns to it unchanged.
-- [ ] Blurred shelves behind; large 320×480 genre-hued cover with glow, frame, emblem, title, author.
-- [ ] Detail panel: genre + format pills, 62px title, byline with page count, star rating + reviews, long blurb.
-- [ ] Add to Cart shows the price with a coin glyph; adds the book, marks the spine taken, updates quest/HUD, and returns to `SHOP`.
-- [ ] Adding does not spend coins; "In cart ✓" when already added.
-- [ ] Stock line and "← Back to the aisle · [Esc]" present.
-- [ ] All fields driven by the passed `Book` (demo: The Ashen Crown, 4.2★, 512 pp, 18 coins, 4 copies).
+- [x] Opens as an overlay over a dimmed `SHOP`; `Esc`/Back returns to it unchanged.
+- [x] Blurred shelves behind; large 320×480 genre-hued cover with glow, frame, emblem, title, author.
+- [x] Detail panel: genre + format pills, 62px title, byline with page count, star rating + reviews, long blurb.
+- [x] Add to Cart shows the price with a coin glyph; adds the book, marks the spine taken, updates quest/HUD, and returns to `SHOP`.
+- [x] Adding does not spend coins; "In cart ✓" when already added.
+- [x] Stock line and "← Back to the aisle · [Esc]" present.
+- [x] All fields driven by the passed `Book` (demo: The Ashen Crown, 4.2★, 512 pp, 18 coins, 4 copies).

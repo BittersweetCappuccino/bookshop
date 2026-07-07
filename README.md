@@ -19,10 +19,11 @@ The project is in two layers:
 
 ## Running the prototype
 
-Requires Python 3 and [pygame](https://www.pygame.org/).
+Requires Python 3 and [pygame](https://www.pygame.org/) (the maintained
+`pygame-ce` fork is pinned in [`requirements.txt`](requirements.txt)).
 
 ```bash
-pip install pygame
+pip install -r requirements.txt   # installs pygame-ce
 python bookstore.py
 ```
 
@@ -107,6 +108,11 @@ Start with the overview.
 bookshop/
 ├── bookstore.py                       # playable prototype ("The Little Bookshop")
 ├── README.md
+├── requirements.txt                   # pygame-ce
+├── spines/                            # the Spines & Starlight game (python -m spines)
+│   ├── theme.py content.py scene.py app.py   # tokens, data, framework, main loop
+│   ├── primitives.py widgets.py fonts.py furniture.py actors.py
+│   └── scenes/                        # title, shop, detail, cart, checkout
 └── docs/
     ├── Spines_and_Starlight_UI_Concept.html   # concept art board (5 screens)
     ├── images/                                # README screenshots
@@ -115,6 +121,24 @@ bookshop/
 
 ## Status
 
-The prototype is playable today. *Spines & Starlight* is fully specced and ready
-to build — the next step is scaffolding the design tokens, content catalog, and
-scene framework described in the docs.
+The prototype is playable today, and *Spines & Starlight* is now playable
+end-to-end (`python -m spines`) — you can walk Title → Shop → Detail → Cart →
+Checkout and back.
+
+### Implementation status
+
+Per-screen acceptance is tracked in each screen's spec doc (the `- [ ]`
+checklists). Verification so far is **headless** — smoke tests, logic
+assertions, and rendered screenshots — not live playtesting.
+
+| Screen | State | Acceptance |
+|--------|-------|-----------|
+| 01 · Title | First pass | 5 / 8 — placeholder book, no reader silhouette, no audio |
+| 02 · Bookshop | Complete | 7 / 8 — audio pending |
+| 03 · Cart | Complete | 9 / 9 |
+| 04 · Checkout | Stub | 0 / 7 |
+| 05 · Book Close-Up | Complete | 7 / 7 |
+
+Cross-cutting work still pending: **audio** (porting the prototype's procedural
+music), **bundled fonts** (Cormorant Garamond / Spectral TTFs — currently serif
+SysFont fallbacks), and the Collection / Settings screens (stubbed in the menu).

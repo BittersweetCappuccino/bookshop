@@ -135,12 +135,12 @@ required animation.
 
 ## 10. Acceptance checklist
 
-- [ ] Two-column layout: item list left, ledger card right.
-- [ ] One row per cart book: genre-hued thumbnail, pill, title, author, price, Remove.
-- [ ] Heading with live "{n} volumes gathered" count.
-- [ ] Ledger shows subtotal, member's charm (−5), total with coin glyph.
-- [ ] Budget box: star-purse balance, spent-fraction progress bar, remaining-after.
-- [ ] All ledger values are live from `ctx` (demo cart totals 70, remaining 50).
-- [ ] Remove deletes the row, recomputes totals, and returns the spine to the shelf.
-- [ ] Proceed → Checkout (disabled when unaffordable); Keep browsing / Esc → Shop.
-- [ ] Empty-cart state handled.
+- [x] Two-column layout: item list left, ledger card right.
+- [x] One row per cart book: genre-hued thumbnail, pill, title, author, price, Remove.
+- [x] Heading with live "{n} volumes gathered" count.
+- [x] Ledger shows subtotal, member's charm (−5), total with coin glyph.
+- [x] Budget box: star-purse balance, spent-fraction progress bar, remaining-after.
+- [x] All ledger values are live from `ctx` (demo cart totals 70, remaining 50).
+- [x] Remove deletes the row, recomputes totals, and returns the spine to the shelf.
+- [x] Proceed → Checkout (disabled when unaffordable); Keep browsing / Esc → Shop.
+- [x] Empty-cart state handled.
