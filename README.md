@@ -140,7 +140,10 @@ particular has only had its code paths exercised; it hasn't been heard.)
 | 04 · Checkout | Complete | 7 / 7 |
 | 05 · Book Close-Up | Complete | 7 / 7 |
 
-All five screens meet their acceptance checklists. Cross-cutting work still
-pending: **bundled fonts** (Cormorant Garamond / Spectral TTFs — currently serif
-SysFont fallbacks) and the Collection / Settings screens (stubbed in the menu).
-Audio (procedural music + chimes) is wired via [`spines/audio.py`](spines/audio.py).
+All five screens meet their acceptance checklists. Audio (procedural music +
+chimes) is wired via [`spines/audio.py`](spines/audio.py), and the **Cormorant
+Garamond** and **Spectral** fonts (SIL Open Font License) are bundled in
+[`spines/assets/fonts/`](spines/assets/fonts/) — the Cormorant weights were
+instantiated from its variable font, and each family ships its `OFL` license.
+Cross-cutting work still pending: the Collection / Settings screens (stubbed in
+the menu).
