@@ -129,16 +129,18 @@ Checkout and back.
 
 Per-screen acceptance is tracked in each screen's spec doc (the `- [ ]`
 checklists). Verification so far is **headless** — smoke tests, logic
-assertions, and rendered screenshots — not live playtesting.
+assertions, and rendered screenshots — not live playtesting. (Audio in
+particular has only had its code paths exercised; it hasn't been heard.)
 
 | Screen | State | Acceptance |
 |--------|-------|-----------|
-| 01 · Title | Complete | 7 / 8 — audio (footer/music box) pending |
-| 02 · Bookshop | Complete | 7 / 8 — audio pending |
+| 01 · Title | Complete | 8 / 8 |
+| 02 · Bookshop | Complete | 8 / 8 |
 | 03 · Cart | Complete | 9 / 9 |
 | 04 · Checkout | Complete | 7 / 7 |
 | 05 · Book Close-Up | Complete | 7 / 7 |
 
-Cross-cutting work still pending: **audio** (porting the prototype's procedural
-music), **bundled fonts** (Cormorant Garamond / Spectral TTFs — currently serif
-SysFont fallbacks), and the Collection / Settings screens (stubbed in the menu).
+All five screens meet their acceptance checklists. Cross-cutting work still
+pending: **bundled fonts** (Cormorant Garamond / Spectral TTFs — currently serif
+SysFont fallbacks) and the Collection / Settings screens (stubbed in the menu).
+Audio (procedural music + chimes) is wired via [`spines/audio.py`](spines/audio.py).

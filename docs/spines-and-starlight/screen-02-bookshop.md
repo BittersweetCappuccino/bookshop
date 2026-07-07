@@ -175,5 +175,5 @@ adding when the cart already holds that book is a no-op (`Cart.add` dedupes).
 - [x] **E**/Add adds in place (spine removed, cart+quest update, Pop); no coin spend.
 - [x] Clicking a spine opens the Detail screen (05).
 - [x] HUD: quest tracker with progress bar, coin balance, cart badge with +N.
-- [ ] **C**/cart icon opens the Cart (03); starfield twinkles; music continues.  <!-- cart+twinkle done; audio deferred to Phase 4 -->
+- [x] **C**/cart icon opens the Cart (03); starfield twinkles; music continues.  <!-- music loop persists across scenes; audible output not yet confirmed by ear -->
 

@@ -2,7 +2,7 @@
 
 import pygame
 
-from .. import theme, fonts, primitives as pr, widgets, content, actors, furniture
+from .. import theme, fonts, primitives as pr, widgets, content, actors, furniture, audio
 from .. import scene as sc
 from .base import starfield, draw_hints
 
@@ -64,6 +64,7 @@ class ShopScene(sc.Scene):
             return
         ctx.cart.add(book)
         self.mira.reach()
+        audio.play_ding()
         self.pops.append(widgets.Pop(sp["rect"].centerx, sp["rect"].y - 10, "Added", theme.GOLD))
         self.badge_plus += 1
         self.badge_timer = 90

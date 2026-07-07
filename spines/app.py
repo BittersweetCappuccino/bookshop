@@ -16,7 +16,7 @@ import sys
 
 import pygame
 
-from . import theme, fonts, primitives as pr
+from . import theme, fonts, primitives as pr, audio
 from . import scene as sc
 from . import scenes  # noqa: F401  (registers all scenes on import)
 from .scenes import base
@@ -73,6 +73,11 @@ def run():
     max_frames = int(os.environ.get("SPINES_MAX_FRAMES", "0"))
 
     ctx = sc.new_context()
+    # Music starts at the title and carries across scenes; skip in headless runs
+    # (dummy video) so smoke/screenshot tooling doesn't build the audio buffer.
+    if os.environ.get("SDL_VIDEODRIVER") != "dummy":
+        audio.init(ctx.muted)
+
     stack = [sc.make_scene(sc.TITLE)]
     stack[-1].on_enter(ctx)
 
@@ -97,6 +102,7 @@ def run():
             if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_m:
                     ctx.muted = not ctx.muted
+                    audio.set_muted(ctx.muted)
                     continue
                 if e.key == pygame.K_F11:
                     fullscreen = not fullscreen

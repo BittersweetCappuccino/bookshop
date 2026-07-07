@@ -2,7 +2,7 @@
 
 import pygame
 
-from .. import theme, fonts, primitives as pr, widgets, actors, furniture
+from .. import theme, fonts, primitives as pr, widgets, actors, furniture, audio
 from .. import scene as sc
 from .base import starfield, draw_hints
 
@@ -34,6 +34,7 @@ class CheckoutScene(sc.Scene):
     def _commit(self, ctx):
         if not self.confirmed and sc.commit_purchase(ctx):
             self.confirmed = True
+            audio.play_cash()
 
     def draw(self, surf, ctx):
         pr.night_bg(surf, glow_center=(180, -40))

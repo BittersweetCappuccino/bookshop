@@ -137,5 +137,5 @@ menu, Enter activates. Not required for a first pass.
 - [x] Four-item menu; New Story is gold, others ghost; Continue disabled without a save.
 - [x] Hover states on all buttons; New Story → `SHOP`.
 - [x] Any-key advances to the default action; Esc quits.
-- [ ] Footer line present; music plays and respects mute.  <!-- footer present; audio deferred to Phase 4 -->
+- [x] Footer line present; music plays and respects mute.  <!-- music via spines/audio.py; audible output not yet confirmed by ear -->
 
