@@ -21,10 +21,11 @@ _HAIR = (74, 48, 34)
 class Mira:
     """The browsing character. `x` is her logical position; `floor_y` her feet."""
 
-    def __init__(self, x, floor_y, min_x, max_x):
+    def __init__(self, x, floor_y, min_x, max_x, scale=1.0):
         self.x = x
         self.floor_y = floor_y
         self.min_x, self.max_x = min_x, max_x
+        self.scale = scale
         self.speed = 3.4
         self.facing = 1
         self.walk_t = 0.0
@@ -49,28 +50,44 @@ class Mira:
         self.reaching = 16
 
     def draw(self, surf, t):
-        x, y = self.x, self.floor_y
+        x, y, s = self.x, self.floor_y, self.scale
         bob = math.sin(self.walk_t) * 2
         swing = math.sin(self.walk_t) * 5
         lift = -12 if self.reaching > 0 else 0
 
-        pr.ellipse_alpha(surf, (x - 26, y + 2, 52, 14), (0, 0, 0, 70))
+        def P(dx, dy):
+            return (x + dx * s, y + dy * s)
+
+        pr.ellipse_alpha(surf, (x - 26 * s, y + 2, 52 * s, 14 * s), (0, 0, 0, 70))
         # legs
-        pr.line(surf, (x - 6, y - 30), (x - 6 - swing, y), _PLUM_DARK, 7)
-        pr.line(surf, (x + 6, y - 30), (x + 6 + swing, y), _PLUM_DARK, 7)
+        pr.line(surf, P(-6, -30), (x + (-6 - swing) * s, y), _PLUM_DARK, 7 * s)
+        pr.line(surf, P(6, -30), (x + (6 + swing) * s, y), _PLUM_DARK, 7 * s)
         # cloak body
-        body = [(x - 15, y - 64), (x + 15, y - 64), (x + 21, y - 26), (x - 21, y - 26)]
-        pr.polygon(surf, body, _PLUM, 0)
-        pr.polygon(surf, body, _PLUM_DARK, 2)
+        pr.polygon(surf, [P(-15, -64), P(15, -64), P(21, -26), P(-21, -26)], _PLUM, 0)
+        pr.polygon(surf, [P(-15, -64), P(15, -64), P(21, -26), P(-21, -26)], _PLUM_DARK, 2 * s)
         # arms (one lifts when reaching for a book)
-        pr.line(surf, (x - 14, y - 60), (x - 18, y - 42 + lift), _PLUM, 6)
-        pr.line(surf, (x + 14, y - 60), (x + 18, y - 42 + lift), _PLUM, 6)
+        pr.line(surf, P(-14, -60), (x - 18 * s, y + (-42 + lift) * s), _PLUM, 6 * s)
+        pr.line(surf, P(14, -60), (x + 18 * s, y + (-42 + lift) * s), _PLUM, 6 * s)
         # back of the head: hair + a low bun
-        hy = y - 74 + bob
-        pr.circle(surf, (x, hy + 1), 13, _HAIR)
-        pr.circle(surf, (x, hy - 11), 6, _HAIR)
+        hy = y - 74 * s + bob
+        pr.circle(surf, (x, hy + 1 * s), 13 * s, _HAIR)
+        pr.circle(surf, (x, hy - 11 * s), 6 * s, _HAIR)
         # warm rim light on the facing side
-        pr.glow(surf, (x + 12 * self.facing, hy), 18, (*theme.LANTERN_LIGHT, 55))
+        pr.glow(surf, (x + 12 * s * self.facing, hy), 18 * s, (*theme.LANTERN_LIGHT, 55))
+
+
+def draw_keeper(surf, x, feet_y, t):
+    """The shopkeeper behind the desk — a simple robed figure, front-facing (§6)."""
+    pr.ellipse_alpha(surf, (x - 30, feet_y + 2, 60, 16), (0, 0, 0, 60))
+    body = [(x - 24, feet_y - 96), (x + 24, feet_y - 96), (x + 34, feet_y), (x - 34, feet_y)]
+    pr.polygon(surf, body, (66, 46, 80), 0)
+    pr.polygon(surf, body, (40, 26, 50), 2)
+    hy = feet_y - 112
+    pr.glow(surf, (x - 16, hy), 22, (*theme.LANTERN_LIGHT, 60))
+    pr.circle(surf, (x, hy), 16, (232, 196, 168))     # face
+    pr.circle(surf, (x, hy - 10), 15, _HAIR)          # hair cap over the crown
+    pr.circle(surf, (x - 6, hy + 1), 1.6, (40, 26, 20))   # eyes
+    pr.circle(surf, (x + 6, hy + 1), 1.6, (40, 26, 20))
 
 
 def draw_cart(surf, mira, books):

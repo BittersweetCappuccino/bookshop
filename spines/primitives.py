@@ -11,6 +11,8 @@ spec's coordinate space and get native-crisp output. Fonts already come back at
 device size from `fonts`, so text is sharp, not upscaled.
 """
 
+import math
+
 import pygame
 
 from . import theme
@@ -92,6 +94,20 @@ def ellipse(surf, rect, color, width=0):
 def polygon(surf, points, color, width=0):
     w = 0 if width == 0 else max(1, sv(width))
     pygame.draw.polygon(surf, color, [sp(p) for p in points], w)
+
+
+def dashed_line(surf, a, b, color, dash=6, gap=4, width=1):
+    ax, ay = a
+    bx, by = b
+    dist = math.hypot(bx - ax, by - ay)
+    if dist == 0:
+        return
+    ux, uy = (bx - ax) / dist, (by - ay) / dist
+    n = int(dist // (dash + gap)) + 1
+    for i in range(n):
+        s = i * (dash + gap)
+        e = min(s + dash, dist)
+        line(surf, (ax + ux * s, ay + uy * s), (ax + ux * e, ay + uy * e), color, width)
 
 
 def ellipse_alpha(surf, rect, rgba):

@@ -136,7 +136,7 @@ assertions, and rendered screenshots — not live playtesting.
 | 01 · Title | First pass | 5 / 8 — placeholder book, no reader silhouette, no audio |
 | 02 · Bookshop | Complete | 7 / 8 — audio pending |
 | 03 · Cart | Complete | 9 / 9 |
-| 04 · Checkout | Stub | 0 / 7 |
+| 04 · Checkout | Complete | 7 / 7 |
 | 05 · Book Close-Up | Complete | 7 / 7 |
 
 Cross-cutting work still pending: **audio** (porting the prototype's procedural

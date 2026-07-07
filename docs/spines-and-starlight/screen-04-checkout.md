@@ -127,10 +127,10 @@ today's veil + "Thanks for shopping, Mira!"):
 
 ## 10. Acceptance checklist
 
-- [ ] Lamplit desk scene: blurred back shelves, hanging lamp with a light cone, desk + lip.
-- [ ] Shopkeeper silhouette behind the desk; stacked books on the counter; Mira (near side) from behind.
-- [ ] Rotated paper receipt: header, dashed dividers, live line items, member's charm, Total Due with ★.
-- [ ] "Complete Purchase" uses the violet gradient (not gold); brightens on hover.
-- [ ] Confirm runs `commit_purchase` once: coins spent, books added to collection, cart cleared, profile saved.
-- [ ] Confirmation veil + thank-you; any key returns to Title.
-- [ ] Esc returns to Cart without paying; coin HUD shown; starfield twinkles.
+- [x] Lamplit desk scene: blurred back shelves, hanging lamp with a light cone, desk + lip.
+- [x] Shopkeeper silhouette behind the desk; stacked books on the counter; Mira (near side) from behind.
+- [x] Rotated paper receipt: header, dashed dividers, live line items, member's charm, Total Due with ★.
+- [x] "Complete Purchase" uses the violet gradient (not gold); brightens on hover.
+- [x] Confirm runs `commit_purchase` once: coins spent, books added to collection, cart cleared, profile saved.
+- [x] Confirmation veil + thank-you; any key returns to Title.
+- [x] Esc returns to Cart without paying; coin HUD shown; starfield twinkles.

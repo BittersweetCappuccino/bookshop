@@ -1,75 +1,67 @@
-"""Screen 04 — The Checkout Desk. Stub (full spec: screen-04-checkout.md)."""
+"""Screen 04 — The Checkout Desk. Full spec: screen-04-checkout.md."""
 
 import pygame
 
-from .. import theme, fonts, primitives as pr, widgets
+from .. import theme, fonts, primitives as pr, widgets, actors, furniture
 from .. import scene as sc
 from .base import starfield, draw_hints
 
+_RECEIPT_TL = (900, 64)   # top-left of the receipt (top 64, right 60, w320)
+
 
 class CheckoutScene(sc.Scene):
-    def __init__(self):
-        self.done = False
+    def on_enter(self, ctx):
+        self.confirmed = False
+        self.cta_rect = None
+        self.keeper_x = 852
+        # Mira on the near side, larger (foreground); she doesn't walk here
+        self.mira = actors.Mira(x=470, floor_y=712, min_x=470, max_x=470, scale=1.7)
 
     def handle_event(self, e, ctx):
-        if e.type != pygame.KEYDOWN:
+        if self.confirmed:
+            if e.type in (pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN):
+                ctx.go(sc.TITLE)
             return
-        if self.done:
-            ctx.go(sc.TITLE)                     # any key after receipt -> menu
-        elif e.key == pygame.K_ESCAPE:
-            ctx.go(sc.CART)
-        elif e.key == pygame.K_RETURN:
-            if sc.commit_purchase(ctx):
-                self.done = True
+        if e.type == pygame.KEYDOWN:
+            if e.key == pygame.K_ESCAPE:
+                ctx.go(sc.CART)
+            elif e.key == pygame.K_RETURN:
+                self._commit(ctx)
+        elif e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+            if self.cta_rect and self.cta_rect.collidepoint(ctx.mouse):
+                self._commit(ctx)
+
+    def _commit(self, ctx):
+        if not self.confirmed and sc.commit_purchase(ctx):
+            self.confirmed = True
 
     def draw(self, surf, ctx):
-        pr.night_bg(surf)
+        pr.night_bg(surf, glow_center=(180, -40))
         starfield().draw(surf, ctx.t)
-        if self.done:
-            pr.draw_text(surf, "Thank you for reading ★",
-                         fonts.display(theme.Size.SECTION, bold=True), theme.CREAM,
-                         (theme.CANVAS_W // 2, theme.CANVAS_H // 2 - 20), center=True)
-            pr.draw_text(surf, "Press any key to return to the menu.",
-                         fonts.body(theme.Size.BODY), theme.GOLD,
-                         (theme.CANVAS_W // 2, theme.CANVAS_H // 2 + 30), center=True)
-            return
+        furniture.blurred_shelves(surf)
+        furniture.desk_lamp(surf, 640, ctx.t)
+        actors.draw_keeper(surf, self.keeper_x, 470, ctx.t)
+        furniture.desk(surf)
+        furniture.light_pool(surf, 470, 470)
+        furniture.stacked_books(surf, 170, 470)
+        self.mira.draw(surf, ctx.t)
 
-        # a plain receipt card (Phase 3 makes this the rotated paper receipt)
-        led = ctx.ledger
-        card = pygame.Rect(0, 0, 420, 480)
-        card.center = (theme.CANVAS_W // 2, theme.CANVAS_H // 2)
-        pr.drop_shadow(surf, card, 16, offset=(0, 14), rgba=(0, 0, 0, 120))
-        pr.vgradient(surf, card, theme.RECEIPT_TOP, theme.RECEIPT_BOTTOM)
-        pr.round_rect(surf, card, theme.RECEIPT_FAINT, 16, width=1)
-        x = card.x + 30
-        pr.draw_text(surf, "Spines & Starlight", fonts.display(theme.Size.PANEL_HEAD, bold=True),
-                     theme.RECEIPT_INK, (x, card.y + 26))
-        eye = pr.render_tracked("EST. BENEATH THE STARS", fonts.body(theme.Size.EYEBROW),
-                                theme.RECEIPT_FAINT, 4)
-        pr.blit(surf, eye, (x, card.y + 62))
-        y = card.y + 110
-        for b in ctx.cart.items:
-            pr.draw_text(surf, b.title[:26], fonts.body(theme.Size.SMALL), theme.RECEIPT_INK, (x, y))
-            pr.draw_text(surf, str(b.price), fonts.body(theme.Size.SMALL), theme.RECEIPT_INK,
-                         (card.right - 30, y), anchor="topright")
-            y += 26
-        y += 10
-        pr.draw_text(surf, "Member's charm", fonts.body(theme.Size.SMALL), theme.RECEIPT_FAINT, (x, y))
-        pr.draw_text(surf, f"-{led.discount}", fonts.body(theme.Size.SMALL), theme.RECEIPT_FAINT,
-                     (card.right - 30, y), anchor="topright")
-        y += 40
-        pr.draw_text(surf, "Total Due", fonts.display(theme.Size.CARD_TITLE, bold=True),
-                     theme.RECEIPT_INK, (x, y))
-        pr.draw_text(surf, f"{led.total} ★", fonts.display(30, bold=True), theme.RECEIPT_INK,
-                     (card.right - 30, y - 4), anchor="topright")
+        self.cta_rect = widgets.draw_receipt(surf, ctx.cart, ctx.ledger, _RECEIPT_TL, ctx.mouse)
+        widgets.coin_pill(surf, (24, 22), ctx.wallet.coins)
 
-        btn = pygame.Rect(card.x + 30, card.bottom - 70, card.width - 60, 46)
-        pr.vgradient(surf, btn, theme.CHECKOUT_BTN_TOP, theme.CHECKOUT_BTN_BOT)
-        pr.round_rect(surf, btn, (*theme.PANEL_BORDER, 200), 11, width=1)
-        pr.draw_text(surf, "[Enter] Complete Purchase", fonts.display(theme.Size.MENU),
-                     theme.CREAM, btn.center, center=True)
+        if self.confirmed:
+            self._draw_confirm(surf)
+        else:
+            draw_hints(surf, ("[Enter] complete purchase", "[Esc] back to cart"))
 
-        draw_hints(surf, ("[Enter] pay", "[Esc] back to cart"))
+    def _draw_confirm(self, surf):
+        pr.alpha_rect(surf, (0, 0, theme.CANVAS_W, theme.CANVAS_H), (30, 16, 34, 170))
+        pr.draw_text(surf, "Thank you for reading", fonts.display(theme.Size.SECTION, bold=True),
+                     theme.CREAM, (theme.CANVAS_W // 2, theme.CANVAS_H // 2 - 24), center=True)
+        pr.draw_text(surf, "Your tales are gathered.", fonts.display(theme.Size.CARD_TITLE),
+                     theme.GOLD, (theme.CANVAS_W // 2, theme.CANVAS_H // 2 + 24), center=True)
+        pr.draw_text(surf, "Press any key to return to the menu.", fonts.body(theme.Size.SMALL),
+                     theme.TEXT_FAINT, (theme.CANVAS_W // 2, theme.CANVAS_H // 2 + 70), center=True)
 
 
 sc.register(sc.CHECKOUT, CheckoutScene)

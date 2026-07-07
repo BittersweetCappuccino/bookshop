@@ -392,6 +392,79 @@ def draw_tooltip(surf, book, anchor):
 
 
 # ----------------------------------------------------------------------
+# Receipt (§13) — the one light surface; rendered upright then rotated
+# ----------------------------------------------------------------------
+def _ellipsize(text, font, max_w_logical):
+    if font.size(text)[0] <= pr.sv(max_w_logical):
+        return text
+    while text and font.size(text + "…")[0] > pr.sv(max_w_logical):
+        text = text[:-1]
+    return text + "…"
+
+
+def draw_receipt(surf, cart, ledger, top_left, mouse):
+    """Rotated paper receipt. Returns the (axis-aligned) Complete-Purchase rect."""
+    W = 320
+    H = 300 + 24 * max(1, len(cart.items))
+    x, w = 24, W - 48
+
+    # the Complete-Purchase button lives at a known y; compute its screen rect now
+    btn_y = H - 92
+    cta = pygame.Rect(top_left[0] + x, top_left[1] + btn_y, w, 50)
+    hover = cta.collidepoint(mouse)
+
+    sub = pygame.Surface((pr.sv(W), pr.sv(H)), pygame.SRCALPHA)
+    pr.vgradient(sub, (0, 0, W, H), theme.RECEIPT_TOP, theme.RECEIPT_BOTTOM)
+
+    y = 22
+    pr.draw_text(sub, "Spines & Starlight", fonts.display(theme.Size.PANEL_HEAD, bold=True),
+                 theme.RECEIPT_INK, (W / 2, y), center=True)
+    y += 34
+    pr.blit(sub, pr.render_tracked("EST. BENEATH THE STARS", fonts.body(10), theme.RECEIPT_FAINT, 3),
+            (W / 2, y), anchor="center")
+    y += 24
+    pr.dashed_line(sub, (x, y), (x + w, y), theme.RECEIPT_FAINT)
+    y += 14
+    for b in cart.items:
+        pr.draw_text(sub, _ellipsize(b.title, fonts.body(13), w - 40), fonts.body(13),
+                     theme.RECEIPT_INK, (x, y))
+        pr.draw_text(sub, str(b.price), fonts.body(13), theme.RECEIPT_INK, (x + w, y), anchor="topright")
+        y += 24
+    y += 6
+    pr.dashed_line(sub, (x, y), (x + w, y), theme.RECEIPT_FAINT)
+    y += 14
+    pr.draw_text(sub, "Member's charm", fonts.body(13), theme.RECEIPT_FAINT, (x, y))
+    pr.draw_text(sub, f"-{ledger.discount}", fonts.body(13), theme.RECEIPT_FAINT, (x + w, y), anchor="topright")
+    y += 30
+    pr.draw_text(sub, "Total Due", fonts.display(theme.Size.CARD_TITLE, bold=True), theme.RECEIPT_INK, (x, y))
+    num = fonts.display(30, bold=True).render(str(ledger.total), True, theme.RECEIPT_INK)
+    pr.blit(sub, num, (x + w - 22, y - 6), anchor="topright")
+    _star(sub, (x + w - 9, y + 11), 8, theme.RECEIPT_INK, True)
+    y += 54
+
+    # Complete Purchase — violet gradient, NOT gold (§4)
+    btn = pygame.Rect(x, btn_y, w, 50)
+    top, bot = theme.CHECKOUT_BTN_TOP, theme.CHECKOUT_BTN_BOT
+    if hover:
+        top = tuple(min(255, c + 22) for c in top)
+        bot = tuple(min(255, c + 22) for c in bot)
+    pr.vgradient(sub, btn, top, bot)
+    pr.round_rect(sub, btn, (*theme.PANEL_BORDER, 220), 11, width=1)
+    pr.draw_text(sub, "Complete Purchase", fonts.display(theme.Size.MENU, bold=True),
+                 theme.CREAM, btn.center, center=True)
+
+    foot = pr.render_tracked("THANK YOU FOR READING", fonts.body(10), theme.RECEIPT_FAINT, 2)
+    pr.blit(sub, foot, (W / 2 - 8, H - 26), anchor="center")
+    _star(sub, (W / 2 + foot.get_width() / theme.SCALE / 2 + 6, H - 26 + 6), 5, theme.RECEIPT_FAINT, True)
+
+    pr.drop_shadow(surf, (top_left[0], top_left[1], W, H), 12, offset=(0, 14), rgba=(0, 0, 0, 120))
+    rot = pygame.transform.rotate(sub, 1.2)
+    center = pr.sp((top_left[0] + W / 2, top_left[1] + H / 2))
+    surf.blit(rot, rot.get_rect(center=center))
+    return cta
+
+
+# ----------------------------------------------------------------------
 # Floating feedback (§16)
 # ----------------------------------------------------------------------
 class Pop:
